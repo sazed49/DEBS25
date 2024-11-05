@@ -17,6 +17,6 @@ for ((i=0; i < 1; i++));
 do
 for ((j=2; j<3; j++));
 do
-CUDA_VISIBLE_DEVICES=0 python main.py --dataset $dataset --AR ${algorithms[$i]} --loader_type iid --experiment_name ${experiment_name}_${dataset}_${algorithms[$i]}_40C_$((j+3) --epochs $global_rounds --num_clients 40 --inner_epochs $local_rounds --list_unreliable ${unreliable_clients[$j]} --list_uatk_flip_sign ${sign_flip_clienst[$j]} --list_uatk_add_noise ${additive_noise_clients[$j]}   --lr $learning_rate --weight_decay $weight_decay --momentum $momentum --verbose  --max_std_unreliable $max_std_unreliable
+CUDA_VISIBLE_DEVICES=0 python main.py --dataset $dataset --AR ${algorithms[$i]} --loader_type iid --experiment_name ${experiment_name}_${dataset}_${algorithms[$i]}_40C_$((j+3)) --epochs $global_rounds --num_clients 40 --inner_epochs $local_rounds --list_unreliable ${unreliable_clients[$j]} --list_uatk_flip_sign ${sign_flip_clienst[$j]} --list_uatk_add_noise ${additive_noise_clients[$j]}   --lr $learning_rate --weight_decay $weight_decay --momentum $momentum --verbose  --max_std_unreliable $max_std_unreliable
 done
 done
