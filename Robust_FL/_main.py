@@ -7,7 +7,6 @@ from tensorboardX import SummaryWriter
 import os
 import logging
 from datetime import datetime
-
 from malicious_clients import *
 from server import Server
 

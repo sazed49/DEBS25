@@ -1,4 +1,5 @@
 dataset="mnist"
+learning_rate=1e-2
 momentum=0.9
 weight_decay=1e-4
 global_rounds=10

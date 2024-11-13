@@ -115,7 +115,7 @@ def parse_args():
     #args.attacker_list_labelFlipping = np.random.permutation(list(range(n)))[:m]
 
     #m = args.n_attacker_labelFlippingDirectional
-    args.attacker_list_labelFlippingDirectional = np.random.permutation(list(range(n)))[:m]
+    #args.attacker_list_labelFlippingDirectional = np.random.permutation(list(range(n)))[:m]
 
     m = args.n_attacker_omniscient
     args.attacker_list_omniscient = np.random.permutation(list(range(n)))[:m]
