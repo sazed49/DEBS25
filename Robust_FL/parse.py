@@ -117,15 +117,15 @@ def parse_args():
     #m = args.n_attacker_labelFlippingDirectional
     #args.attacker_list_labelFlippingDirectional = np.random.permutation(list(range(n)))[:m]
 
-    m = args.n_attacker_omniscient
-    args.attacker_list_omniscient = np.random.permutation(list(range(n)))[:m]
+    #m = args.n_attacker_omniscient
+    #args.attacker_list_omniscient = np.random.permutation(list(range(n)))[:m]
 
     m = args.list_unreliable
     args.list_unreliable = [int(i) for i in m.split(',')] if m else []
     m = args.list_uatk_add_noise
     args.list_uatk_add_noise = [int(i) for i in m.split(',')] if m else []
-    #m = args.list_uatk_flip_sign
-    #args.list_uatk_flip_sign = [int(i) for i in m.split(',')] if m else []
+    m = args.list_uatk_flip_sign
+    args.list_uatk_flip_sign = [int(i) for i in m.split(',')] if m else []
     #m = args.list_tatk_multi_label_flipping
     #args.list_tatk_multi_label_flipping = [int(i) for i in m.split(',')] if m else []
     #m = args.list_tatk_label_flipping

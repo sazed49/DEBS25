@@ -106,15 +106,22 @@ def main(args):
         server.set_AR_param(dbscan_eps=18, min_samples=12) #20 is still OK without sign-flipping, 30. is OK without sign-flipping, min_samples=10 is failed.
     elif args.dataset == 'fashion_mnist':
         server.set_AR_param(dbscan_eps=1.3, min_samples=5)
+    else :
+        server.set_AR_param(dbscan_eps =1.3, min_samples=10)
 
     server.path_to_aggNet = args.path_to_aggNet
 
     label = torch.ones(args.num_clients)
+    print("label here",label)
     
+    #for i in args.attacker_list_omniscient:
+        #label[i] = 0
     for i in args.list_uatk_add_noise:
         label[i] = 0
     for i in args.list_uatk_flip_sign:
+        print("i am here")
         label[i] = 0
+    logging.info("[1-normal, 0-malicious] label ={}".format(label))
    
 
     if args.save_model_weights:
@@ -124,7 +131,7 @@ def main(args):
         Path(server.savePath).mkdir(parents=True, exist_ok=True)
         torch.save(label, f'{server.savePath}/label.pt')
     # attacker_list_labelFlipping = args.attacker_list_labelFlipping
-    # attacker_list_omniscient = args.attacker_list_omniscient
+    #attacker_list_omniscient = args.attacker_list_omniscient
     # attacker_list_backdoor = args.attacker_list_backdoor
     # attacker_list_labelFlippingDirectional = args.attacker_list_labelFlippingDirectional
     # attacker_list_semanticBackdoor = args.attacker_list_semanticBackdoor
@@ -138,6 +145,9 @@ def main(args):
         elif args.optimizer == 'AdamW':
             optimizer = optim.AdamW(model.parameters(), lr=args.lr)
 
+        #if i in attacker_list_omniscient:
+            #client_i = Attacker_Omniscient(i, model, trainData[i], optimizer,
+                #criterion, device, args.omniscient_scale, args.inner_epochs)
         if i in args.list_uatk_flip_sign:
             client_i = Attacker_Omniscient(i, model, trainData[i], optimizer,
                 criterion, device, args.omniscient_scale, args.inner_epochs)
@@ -155,10 +165,12 @@ def main(args):
                 args.blur_method, args.inner_epochs, channels=channels,
                 kernel_size=kernel_size)
         else:
+            print(trainData[i])
             client_i = Client(i, model, trainData[i], optimizer, criterion,
                 device, args.inner_epochs)
         server.attach(client_i)
     server.set_log_path(results_directory, args.experiment_name, start_time)
+    print("Here in line 223 of _main.py")
     loss, accuracy = server.test()
     steps = 0
     writer.add_scalar('test/loss', loss, steps)
