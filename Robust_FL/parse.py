@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument("--output_folder", type=str, default="experiments",
                         help="path to output folder, e.g. \"experiment\"")
     parser.add_argument("--dataset", type=str,
-        choices=["mnist", "cifar", "cifar100", "imdb", "fashion_mnist","custom"],
+        choices=["mnist", "cifar", "cifar100", "imdb", "fashion_mnist","rockburst"],
         default="mnist", help="Default is mnist dataset.")
     parser.add_argument("--loader_type", type=str,
         choices=["iid", "byLabel", "dirichlet"], default="iid",

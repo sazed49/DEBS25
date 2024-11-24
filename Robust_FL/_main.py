@@ -87,12 +87,15 @@ def main(args):
         testData = fashion_mnist.test_dataloader(args.test_batch_size)
         Net = fashion_mnist.RockburstNet
         criterion = F.cross_entropy
-    elif args.dataset == 'custom':
-        from models import custom as c
-        trainData = c.train_dataloader(args.num_clients,
+    elif args.dataset == 'rockburst':
+        from models import rockburst as r
+        print("args.num_clients ",args.num_clients)
+        trainData = r.train_dataloader(args.num_clients,
             loader_type=args.loader_type, path=args.loader_path, store=False)
-        testData = c.test_dataloader(args.test_batch_size)
-        Net = c.RockburstNet
+        print("This is the length of traindata",len(trainData))
+        
+        testData = r.test_dataloader(args.test_batch_size)
+        Net = r.ImprovedClassifier
         criterion = F.cross_entropy
     
     model=Net()
