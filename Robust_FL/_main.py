@@ -107,26 +107,12 @@ def main(args):
     server.path_to_aggNet = args.path_to_aggNet
 
     label = torch.ones(args.num_clients)
-    for i in args.attacker_list_labelFlipping:
-        label[i] = 0
-    for i in args.attacker_list_labelFlippingDirectional:
-        label[i] = 0
-    for i in args.attacker_list_omniscient:
-        label[i] = 0
-    for i in args.attacker_list_backdoor:
-        label[i] = 0
-    for i in args.attacker_list_semanticBackdoor:
-        label[i] = 0
+    
     for i in args.list_uatk_add_noise:
         label[i] = 0
     for i in args.list_uatk_flip_sign:
         label[i] = 0
-    for i in args.list_tatk_multi_label_flipping:
-        label[i] = 0
-    for i in args.list_tatk_label_flipping:
-        label[i] = 0
-    for i in args.list_tatk_backdoor:
-        label[i] = 0
+   
 
     if args.save_model_weights:
         server.isSaveChanges = True

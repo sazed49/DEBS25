@@ -46,8 +46,8 @@ def parse_args():
     #parser.add_argument("--n_attacker_labelFlippingDirectional", type=int, default=0)
     parser.add_argument("--n_attacker_omniscient", type=int, default=0)
     parser.add_argument("--omniscient_scale", type=int, default=1)
-    #parser.add_argument("--attacks", type=str,
-        #help="if contains \"backdoor\", activate the corresponding tests")
+    parser.add_argument("--attacks", type=str,
+        help="if contains \"backdoor\", activate the corresponding tests")
     parser.add_argument("--save_model_weights", action="store_true")
     parser.add_argument("--experiment_name", type=str)
     parser.add_argument("--path_to_aggNet", type=str)
@@ -68,7 +68,7 @@ def parse_args():
     parser.add_argument("--mean_unreliable", type=float, default=0.,
         help="Mean of Gaussian noise add to raw image for unreliable clients."
             " Default is 0")
-    parser.add_argument("--blur_method", type=str, default='gaussian_smooth',
+    parser.add_argument("--blur_method", type=str, default='add_noise',
         choices=['add_noise', 'gaussian_smooth'],
         help="Method to make low quality image (use std=50). Default: gaussian_smooth")
     parser.add_argument("--max_std_unreliable", type=float, default=50,

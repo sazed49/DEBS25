@@ -10,8 +10,9 @@ import numpy as np
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from collections import defaultdict, Counter
 
-from tools import tools
-
+from utils import utils
+from utils.backdoor_semantic_utils import SemanticBackdoor_Utils
+from utils.backdoor_utils import Backdoor_Utils
 import time
 import json
 
@@ -188,7 +189,7 @@ class Server():
         test_loss = 0
         correct = 0
         count = 0
-        nb_classes = 10 # for MNIST, Fashion-MNIST, CIFAR-10
+        nb_classes = 4 # for MNIST, Fashion-MNIST, CIFAR-10
         cf_matrix = torch.zeros(nb_classes, nb_classes)
         with torch.no_grad():
             for data, target in self.dataLoader:
@@ -229,10 +230,58 @@ class Server():
 
         return test_loss, accuracy
 
-    
-   
+    def test_backdoor(self):
+        logging.info("[Server] Start testing backdoor\n")
+        self.model.to(self.device)
+        self.model.eval()
+        test_loss = 0
+        correct = 0
+        utils = Backdoor_Utils()
+        with torch.no_grad():
+            for data, target in self.dataLoader:
+                data, target = utils.get_poison_batch(data, target, backdoor_fraction=1,
+                                                      backdoor_label=utils.backdoor_label, evaluation=True)
+                data, target = data.to(self.device), target.to(self.device)
+                output = self.model(data)
+                test_loss += self.criterion(output, target, reduction='sum').item()  # sum up batch loss
+                pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+                correct += pred.eq(target.view_as(pred)).sum().item()
 
-    
+        test_loss /= len(self.dataLoader.dataset)
+        accuracy = 100. * correct / len(self.dataLoader.dataset)
+
+        self.model.cpu()  ## avoid occupying gpu when idle
+        logging.info(
+            '[Server] Test set (Backdoored): Average loss: {:.4f}, Success rate: {}/{} ({:.0f}%)\n'.
+                format(test_loss, correct, len(self.dataLoader.dataset), accuracy))
+        return test_loss, accuracy
+
+    def test_semanticBackdoor(self):
+        logging.info("[Server] Start testing semantic backdoor")
+
+        self.model.to(self.device)
+        self.model.eval()
+        test_loss = 0
+        correct = 0
+        utils = SemanticBackdoor_Utils()
+        with torch.no_grad():
+            for data, target in self.dataLoader:
+                data, target = utils.get_poison_batch(data, target, backdoor_fraction=1,
+                                                      backdoor_label=utils.backdoor_label, evaluation=True)
+                data, target = data.to(self.device), target.to(self.device)
+                output = self.model(data)
+                test_loss += self.criterion(output, target, reduction='sum').item()  # sum up batch loss
+                pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+                correct += pred.eq(target.view_as(pred)).sum().item()
+
+        test_loss /= len(self.dataLoader.dataset)
+        accuracy = 100. * correct / len(self.dataLoader.dataset)
+
+        self.model.cpu()  ## avoid occupying gpu when idle
+        logging.info(
+            '[Server] Test set (Semantic Backdoored): Average loss: {:.4f}, Success rate: {}/{} ({:.0f}%)\n'.
+                format(test_loss, correct, len(self.dataLoader.dataset), accuracy))
+        return test_loss, accuracy, data, pred
 
     def train(self, group):
         selectedClients = [self.clients[i] for i in group]
@@ -261,7 +310,7 @@ class Server():
         Delta = deepcopy(self.emptyStates)
         deltas = [c.getDelta() for c in clients]
 
-        param_trainable = tools.getTrainableParameters(self.model)
+        param_trainable = utils.getTrainableParameters(self.model)
 
         param_nontrainable = [param for param in Delta.keys() if param not in param_trainable]
         for param in param_nontrainable:
@@ -276,7 +325,7 @@ class Server():
         saveAsPCA = False # True
         saveOriginal = True #False
         if saveAsPCA:
-            from tools import convert_pca
+            from utils import convert_pca
             proj_vec = convert_pca._convertWithPCA(Delta)
             savepath = f'{self.savePath}/pca_{self.iter}.pt'
             torch.save(proj_vec, savepath)
@@ -901,15 +950,16 @@ class Server():
         deltas = [c.getDelta() for c in clients]
         # size is relative to number of samples, actually it is number of batches
         sizes = [c.get_data_size() for c in clients]
+        #print("Sizes in line 953.server.py ",sizes)
         total_s = sum(sizes)
         logging.info(f"clients' sizes={sizes}, total={total_s}")
         weights = [s/total_s for s in sizes]
-        vecs = [tools.net2vec(delta) for delta in deltas]
+        vecs = [utils.net2vec(delta) for delta in deltas]
         vecs = [vec for vec in vecs if torch.isfinite(vec).all().item()]
         weighted_vecs = [w*v for w,v in zip(weights, vecs)]
         result = func(torch.stack(vecs, 1).unsqueeze(0))  # input as 1 by d by n
         result = result.view(-1)
-        tools.vec2net(result, Delta)
+        utils.vec2net(result, Delta)
         return Delta
 
     def FedFuncWholeStateDict(self, clients, func):
@@ -919,7 +969,7 @@ class Server():
         Delta = deepcopy(self.emptyStates)
         deltas = [c.getDelta() for c in clients]
         # sanity check, remove update vectors with nan/inf values
-        deltas = [delta for delta in deltas if torch.isfinite(tools.net2vec(delta)).all().item()]
+        deltas = [delta for delta in deltas if torch.isfinite(utils.net2vec(delta)).all().item()]
 
         resultDelta = func(deltas)
 
