@@ -186,11 +186,11 @@ def main(args):
         logging.info('Epoch %d' % j)
         logging.info('Model distribution')
         server.distribute()
-        #         group=Random().sample(range(5),1)
+        
         group = range(args.num_clients)
         print("group------", group)
         server.train(group)
-        #         server.train_concurrent(group)
+        
 
         loss, accuracy = server.test()
 
