@@ -15,7 +15,7 @@ from torch.utils.data import Dataset, DataLoader # Import DataLoader and Dataset
 from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE
 
-from dataloader import *
+from customloader import *
 
 
 
@@ -102,7 +102,7 @@ def getDataset():
 
 def basic_loader(num_clients, loader_type):
     dataset = getDataset()
-    print("Here the legnth of mydataset ",len(dataset))
+    #print("Here the legnth of mydataset ",len(dataset))
     return loader_type(num_clients, dataset)
 
 
@@ -231,7 +231,7 @@ class CustomTestDataset(Dataset):
 def test_dataloader(test_batch_size):
     file_path = '/content/drive/MyDrive/ICDCS/modified_rock_data.csv'
     test_loader = torch.utils.data.DataLoader(CustomTestDataset(file_path), batch_size=test_batch_size)
-    print(len(test_loader))
+    #print(len(test_loader))
     return test_loader
 
 
