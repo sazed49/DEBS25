@@ -178,7 +178,6 @@ class Server():
         self.delay_decision = 2 # 2 consecutive rounds
         self.pre_mal_id = defaultdict(int)
         self.count_unreliable = defaultdict(int)
-        # DBSCAN hyper-parameters:
         self.dbscan_eps = 0.5
         self.dbscan_min_samples=5
 
@@ -213,7 +212,7 @@ class Server():
             c.setModelParameter(self.model.state_dict())
 
     def test(self):
-        logging.info("[Server] Start testing")
+        
         self.model.to(self.device)
         self.model.eval()
         test_loss = 0
@@ -260,58 +259,9 @@ class Server():
 
         return test_loss, accuracy
 
-    def test_backdoor(self):
-        logging.info("[Server] Start testing backdoor\n")
-        self.model.to(self.device)
-        self.model.eval()
-        test_loss = 0
-        correct = 0
-        utils = Backdoor_Utils()
-        with torch.no_grad():
-            for data, target in self.dataLoader:
-                data, target = utils.get_poison_batch(data, target, backdoor_fraction=1,
-                                                      backdoor_label=utils.backdoor_label, evaluation=True)
-                data, target = data.to(self.device), target.to(self.device)
-                output = self.model(data)
-                test_loss += self.criterion(output, target, reduction='sum').item()  # sum up batch loss
-                pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-                correct += pred.eq(target.view_as(pred)).sum().item()
+    
 
-        test_loss /= len(self.dataLoader.dataset)
-        accuracy = 100. * correct / len(self.dataLoader.dataset)
-
-        self.model.cpu()  ## avoid occupying gpu when idle
-        logging.info(
-            '[Server] Test set (Backdoored): Average loss: {:.4f}, Success rate: {}/{} ({:.0f}%)\n'.
-                format(test_loss, correct, len(self.dataLoader.dataset), accuracy))
-        return test_loss, accuracy
-
-    def test_semanticBackdoor(self):
-        logging.info("[Server] Start testing semantic backdoor")
-
-        self.model.to(self.device)
-        self.model.eval()
-        test_loss = 0
-        correct = 0
-        utils = SemanticBackdoor_Utils()
-        with torch.no_grad():
-            for data, target in self.dataLoader:
-                data, target = utils.get_poison_batch(data, target, backdoor_fraction=1,
-                                                      backdoor_label=utils.backdoor_label, evaluation=True)
-                data, target = data.to(self.device), target.to(self.device)
-                output = self.model(data)
-                test_loss += self.criterion(output, target, reduction='sum').item()  # sum up batch loss
-                pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-                correct += pred.eq(target.view_as(pred)).sum().item()
-
-        test_loss /= len(self.dataLoader.dataset)
-        accuracy = 100. * correct / len(self.dataLoader.dataset)
-
-        self.model.cpu()  ## avoid occupying gpu when idle
-        logging.info(
-            '[Server] Test set (Semantic Backdoored): Average loss: {:.4f}, Success rate: {}/{} ({:.0f}%)\n'.
-                format(test_loss, correct, len(self.dataLoader.dataset), accuracy))
-        return test_loss, accuracy, data, pred
+    
 
     def train(self, group):
         selectedClients = [self.clients[i] for i in group]
@@ -330,7 +280,7 @@ class Server():
         tic = time.perf_counter()
         Delta = self.AR(selectedClients)   #agrregated model update computed using selected aggregation
         toc = time.perf_counter()
-        logging.info(f"[Server] The aggregation takes {toc - tic:0.6f} seconds.\n")
+        logging.info(f" Total aggregation time {toc - tic:0.6f} seconds.\n")
 
         for param in self.model.state_dict():
             self.model.state_dict()[param] += Delta[param]   #updating the global model
@@ -348,13 +298,12 @@ class Server():
             del Delta[param]
         logging.info(f"[Server] Saving the model weight of the trainable paramters:\n {Delta.keys()}")
         for param in param_trainable:
-            ##stacking the weight in the innerest dimension
             param_stack = torch.stack([delta[param] for delta in deltas], -1)
             shaped = param_stack.view(-1, len(clients))
             Delta[param] = shaped
 
-        saveAsPCA = False # True
-        saveOriginal = True #False
+        saveAsPCA = False 
+        saveOriginal = True 
         if saveAsPCA:
             from tools import convert_pca
             proj_vec = convert_pca._convertWithPCA(Delta)
@@ -741,158 +690,7 @@ class Server():
         out = self.FedFuncWholeNet(normal_clients, lambda arr: torch.mean(arr, dim=-1, keepdim=True))
         return out
 
-    # def minedetect(self, clients):
-        
-
-        
-    #     normalized_local_median = {}
-        
-    #     full_norm_real_delta=[]
-        
-    #     short_HoGs = {}
-    #     local_medians={}
-    #     real_deltas={}
-    #     flip_sign_id = set()
-
-        
-    #     for i in range(self.num_clients):
-    #       local_median = clients[i].get_local_median().detach().cpu().numpy()
-    #       local_medians[i]=local_median
-    #       L2_local_median = np.linalg.norm(local_median)
-    #         #full_norm_real_delta.append(local_median/L2_local_median)
-    #       #[i] =local_median 
-    #       real_delta=clients[i].getRealValue().detach().cpu().numpy()
-    #       L2_real_delta = np.linalg.norm(real_delta)
-    #       full_norm_real_delta.append(real_delta/L2_real_delta)
-    #       real_deltas[i] = real_delta
-          
-
-
-          
-    #       if i not in self.mal_ids:
-    #             normalized_local_median[i] = local_median/L2_local_median
-
-    #       # Calculate the global median over all clients' local medians
-    #       #global_median = np.median(np.array([clients[j].get_local_median().detach().cpu().numpy() 
-    #                                      #for j in range(self.num_clients)]), axis=0)
-    #     flip_sign_id = set()
-    #     global_median = np.median(np.array([clients[j].get_local_median().detach().cpu().numpy() 
-    #                                      for j in range(self.num_clients)]), axis=0)
-    #       # Compare the client's local median with the global median to detect sign flip
-    #       # Compute the dot product to check similarity
-    #     for i, v in local_medians.items():
-    #             #logging.info(f"median_sHoG={median_sHoG}, v={v}")
-    #             v = np.array(list(v))
-    #             d_cos = np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
-    #             if d_cos < 0: # angle > 90
-    #                 print(f"Sign-flip detected for client {i}")
-    #                 flip_sign_id.add(i)
-    #                 #logging.debug("Detect FLIP_SIGN client={}".format(i))
-    #     logging.info(f"flip_sign_id={flip_sign_id}")
-    #     #dot_product = np.dot(local_median.flatten(), global_median.flatten())
-    #     #flip_sign_id = set()
-    #       # Detect whether a sign flip is present (negative dot product indicates sign flip)
-    #     #if dot_product < 0:
-    #     #print(f"Sign-flip detected for client {i}")
-    #         #flip_sign_id.add(i)
-    #         #print("flip--->",flip_sign_id)
-    #         #print("data")
-    #       #else:
-    #         #print(f"Client {i} behaving normally.")
-           
-    #       #local_median=clients[i].get_local_median().detach().cpu().numpy()
-    #         #print("local median->",local_median)
-    #         #print("here in server 757")
-    #     L2_local_median = np.linalg.norm(local_median)
-    #         #full_norm_real_delta.append(local_median/L2_local_median)
-    #       #[i] =local_median 
-    #     real_delta=clients[i].getRealValue().detach().cpu().numpy()
-    #     L2_real_delta = np.linalg.norm(real_delta)
-    #     full_norm_real_delta.append(real_delta/L2_real_delta)
-    #     real_deltas[i] = real_delta
-    #       #flip_sign_id = set()
-
-
-    #         # Exclude the firmed malicious clients
-    #     if i not in self.mal_ids:
-    #             normalized_local_median[i] = local_median/L2_local_median
-
-       
-        
-           
-             
-           
-        
-    #     non_mal_sHoGs=dict(local_medians) #non_mal_local_medians
-    #     for i in self.mal_ids:
-    #             non_mal_sHoGs.pop(i)
-    #     out1={}
-    #     out2={}
-    #     global_median=np.median(np.array(list(non_mal_sHoGs.values())), axis=0)
-    #     for i,v in local_medians.items():
-    #             #out1[i]=np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
-    #           out2[i] = np.linalg.norm(global_median-local_medians[i])
-          
-
-    #     t1= find_separate_point(list(out1.values()))
-    #     t2=find_separate_point(list(out2.values()))
-
-            
-    #     uAtk_id = set()
-    #       # for i, v in real_deltas.items():
-    #       #       #logging.info(f"median_sHoG={median_sHoG}, v={v}")
-    #       #       v = np.array(list(v))
-    #       #       cos = np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
-    #       #       if cos < 0: # angle > 90
-    #       #           flip_sign_id.add(i)
-    #       #           #logging.debug("Detect FLIP_SIGN client={}".format(i))
-    #       #       # if v<t1:
-    #       #       #     self.unreliable_ids.add(k)
-    #     for k, v in out2.items():
-              
-    #         if v> t2:
-    #             uAtk_id.add(k)
-    #             #total_detected+=1
-    #     for i in self.mal_ids:
-    #             if i in short_HoGs:
-    #                 local_medians.pop(i)
-    #     global_median = np.median(np.array(list(local_medians.values())), axis=0)
-    #     angle_sHoGs = {}
-    #     for i, v in local_medians.items():
-    #             out1[i] = np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
-
-    #     t1 = find_separate_point(list(out1.values()))
-    #     normal_id, uRel_id = set(), set()
-    #     for k, v in out1.items():
-    #             if v < t1: # larger angle, smaller cosine similarity
-    #                 uRel_id.add(k)
-    #             else:
-    #                 normal_id.add(k)
-            
-    #     for k in range(self.num_clients):
-    #             if k in uRel_id:
-    #                 self.count_unreliable[k] += 1
-    #                 if self.count_unreliable[k] > self.delay_decision:
-    #                     self.unreliable_ids.add(k)
-    #                     #total_detected+=1
-    #             # do this before decreasing count
-    #             if self.count_unreliable[k] == 0 and k in self.unreliable_ids:
-    #                 self.unreliable_ids.remove(k)
-    #             if k not in uRel_id and self.count_unreliable[k] > 0:
-    #                 self.count_unreliable[k] -= 1
-    #     normal_clients = []
-    #     for i, client in enumerate(clients):
-    #             if i not in self.mal_ids and  i not in uAtk_id:
-    #                 normal_clients.append(client)
-    #     self.normal_clients = normal_clients
-    #     logging.info(f"flip_sign_id={flip_sign_id}")
-    #     logging.info(f"additve id={uAtk_id}")
-    #     logging.info(f"unreliable id ={self.unreliable_ids}")
-    #     print(" calling fed-----------------------------------------")
-    #     print("total detected>>>>>>>>>>",len(flip_sign_id)+len(uAtk_id)+len(self.unreliable_ids))
-    #     out = self.FedFuncWholeNet(normal_clients, lambda arr: torch.mean(arr, dim=-1, keepdim=True))
-    #     return out
-
+    
       
     
       

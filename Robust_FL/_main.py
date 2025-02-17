@@ -41,15 +41,8 @@ def main(args):
         logging.info(f"#{i:>40}: {str(getattr(args, i)):<20}#")
     logging.info("#" * 64)
     logging.info(args)
-    logging.info('#####################')
-    logging.info('#####################')
-    logging.info('#####################')
-    logging.info(f'Aggregation Rule:\t{args.AR}')
-    logging.info(f'Data distribution:\t{args.loader_type}')
-    logging.info(f'Attacks:\t{args.attacks} ')
-    logging.info('#####################')
-    logging.info('#####################')
-    logging.info('#####################')
+    
+    
 
     torch.manual_seed(args.seed)
 
@@ -106,22 +99,20 @@ def main(args):
         Net = r.ImprovedClassifier
         criterion = F.cross_entropy
 
-    # create server instance
+    # create server object
     model0 = Net()
     server = Server(model0, testData, criterion, device)
     server.set_AR(args.AR)
     if args.dataset == 'cifar':
-        #server.set_AR_param(dbscan_eps=35.) # OK for untargeted attack, but does not detect potential targeted attack
-        server.set_AR_param(dbscan_eps=18, min_samples=12) #20 is still OK without sign-flipping, 30. is OK without sign-flipping, min_samples=10 is failed.
+         
+        server.set_AR_param(dbscan_eps=18, min_samples=12) 
     elif args.dataset == 'fashion_mnist':
         server.set_AR_param(dbscan_eps=1.3, min_samples=5)
     else :
         server.set_AR_param(dbscan_eps =1.3, min_samples=10)
 
     server.path_to_aggNet = args.path_to_aggNet
-    '''
-    honest clients are labeled as 1, malicious clients are labeled as 0
-    '''
+    
     label = torch.ones(args.num_clients)
     
     
@@ -140,11 +131,13 @@ def main(args):
         from pathlib import Path
         Path(server.savePath).mkdir(parents=True, exist_ok=True)
         torch.save(label, f'{server.savePath}/label.pt')
-    # create clients instance
-
     
     
     
+    
+    
+    
+    # create client object
     
     for i in range(args.num_clients):
         model = Net()
@@ -157,11 +150,6 @@ def main(args):
             optimizer = optim.AdamW(model.parameters(), lr=args.lr)
 
       
-        
-        
-        
-
-        
         
         
         if i in args.list_uatk_flip_sign:
@@ -192,21 +180,11 @@ def main(args):
     steps = 0
     writer.add_scalar('test/loss', loss, steps)
     writer.add_scalar('test/accuracy', accuracy, steps)
-
-    if args.attacks and 'BACKDOOR' in args.attacks.upper():
-        if 'SEMANTIC' in args.attacks.upper():
-            loss, accuracy, bdata, bpred = server.test_semanticBackdoor()
-        else:
-            loss, accuracy = server.test_backdoor()
-
-        writer.add_scalar('test/loss_backdoor', loss, steps)
-        writer.add_scalar('test/backdoor_success_rate', accuracy, steps)
-
     for j in range(args.epochs):
         steps = j + 1
 
-        logging.info('########EPOCH %d ########' % j)
-        logging.info('###Model distribution###')
+        logging.info('Epoch %d' % j)
+        logging.info('Model distribution')
         server.distribute()
         #         group=Random().sample(range(5),1)
         group = range(args.num_clients)
@@ -218,15 +196,5 @@ def main(args):
 
         writer.add_scalar('test/loss', loss, steps)
         writer.add_scalar('test/accuracy', accuracy, steps)
-
-        if args.attacks and 'BACKDOOR' in args.attacks.upper():
-            if 'SEMANTIC' in args.attacks.upper():
-                loss, accuracy, bdata, bpred = server.test_semanticBackdoor()
-            else:
-                loss, accuracy = server.test_backdoor()
-
-            writer.add_scalar('test/loss_backdoor', loss, steps)
-            writer.add_scalar('test/backdoor_success_rate', accuracy, steps)
-
     server.close()
     writer.close()

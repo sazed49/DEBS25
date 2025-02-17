@@ -51,7 +51,7 @@ class Client():
         return data, target
 
     def get_data_size(self):
-        #print("Data size",len(self.dataLoader))
+        print("Data size",len(self.dataLoader))
         #for x,y in self.dataLoader:
           #print(x)
         return len(self.dataLoader)
@@ -74,7 +74,7 @@ class Client():
                 loss.backward()
                 self.optimizer.step()
         self.isTrained = True
-        self.model.cpu()  ## avoid occupying gpu when idle
+        self.model.cpu()  
 
     def test(self, testDataLoader):
         self.model.to(self.device)
@@ -128,14 +128,14 @@ class Client():
 
       self.isTrained = False
 
-    
+    def get_local_median(self):
+      return torch.cat([v.flatten() for v in self.local_avg.values()])
     def getDelta(self):
         return self.stateChange
     def getRealValue(self):
       return torch.cat([v.flatten() for v in self.originalState.values()])
     #my local median function
-    def get_local_median(self):
-      return torch.cat([v.flatten() for v in self.local_avg.values()])
+    
     
 
 

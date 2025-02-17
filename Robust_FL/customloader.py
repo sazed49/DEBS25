@@ -5,7 +5,7 @@ import torch
 from collections import defaultdict
 
 class Partition(torch.utils.data.Dataset):
-    """ Dataset-like object, but only access a subset of it. """
+    
 
     def __init__(self, data, index):
         self.data = data
@@ -21,14 +21,10 @@ class Partition(torch.utils.data.Dataset):
 
 
 class customDataLoader():
-    """ Virtual class: load a particular partition of dataset"""
+    
 
     def __init__(self, size, dataset, bsz):
-        '''
-        size: number of paritions in the loader
-        dataset: pytorch dataset
-        bsz: batch size of the data loader
-        '''
+        
         self.size = size
         self.dataset = dataset
         self.classes = np.unique(dataset.targets).tolist()
@@ -96,9 +92,6 @@ class byLabelLoader(customDataLoader):
 
 class dirichletLoader(customDataLoader):
     def __init__(self, size, dataset, alpha=0.9, bsz=64):
-        # alpha is used in getPartition,
-        # and getPartition is used in parent constructor
-        # hence need to initialize alpha first
         self.alpha = alpha
         super(dirichletLoader, self).__init__(size, dataset, bsz)
 
