@@ -1,0 +1,48 @@
+2024-12-03 23:10:53,735 INFO _main.py 39:: ################################################################
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                              batch_size: 32                  #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                         test_batch_size: 32                  #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                                  epochs: 10                  #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                               optimizer: SGD                 #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                                      lr: 0.01                #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                                momentum: 0.9                 #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                            weight_decay: 0.0001              #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                                    seed: 1                   #
+2024-12-03 23:10:53,736 INFO _main.py 41:: #                            log_interval: 11                  #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                             num_clients: 40                  #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                           output_folder: experiments         #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                                 dataset: cifar               #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                             loader_type: dirichlet           #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                             loader_path: ./data/loader.pk    #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                                      AR: mudhog              #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                     n_attacker_backdoor: 0                   #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                        backdoor_trigger: [0, 0, 1, 1]        #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                   n_attacker_omniscient: 0                   #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                        omniscient_scale: 1                   #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                                 attacks: None                #
+2024-12-03 23:10:53,737 INFO _main.py 41:: #                      save_model_weights: False               #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                         experiment_name: sExp4Ba_40ep_cifar_mudhog_40C_5#
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                          path_to_aggNet: None                #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                                  device: cuda                #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                            inner_epochs: 4                   #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                                 verbose: True                #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                         list_unreliable: [2, 18, 20]         #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                     unreliable_fraction: 0.5                 #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                    unreliable_fracTrain: 0.3                 #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                         mean_unreliable: 0.0                 #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                             blur_method: add_noise           #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                      max_std_unreliable: 30.0                #
+2024-12-03 23:10:53,738 INFO _main.py 41:: #                     list_uatk_add_noise: [24, 25, 26]        #
+2024-12-03 23:10:53,739 INFO _main.py 41:: #                          mean_add_noise: 0.0                 #
+2024-12-03 23:10:53,739 INFO _main.py 41:: #                           std_add_noise: 0.01                #
+2024-12-03 23:10:53,739 INFO _main.py 41:: #                     list_uatk_flip_sign: [0, 10, 11]         #
+2024-12-03 23:10:53,739 INFO _main.py 42:: ################################################################
+2024-12-03 23:10:53,739 INFO _main.py 43:: Namespace(batch_size=32, test_batch_size=32, epochs=10, optimizer='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001, seed=1, log_interval=11, num_clients=40, output_folder='experiments', dataset='cifar', loader_type='dirichlet', loader_path='./data/loader.pk', AR='mudhog', n_attacker_backdoor=0, backdoor_trigger=[0, 0, 1, 1], n_attacker_omniscient=0, omniscient_scale=1, attacks=None, save_model_weights=False, experiment_name='sExp4Ba_40ep_cifar_mudhog_40C_5', path_to_aggNet=None, device='cuda', inner_epochs=4, verbose=True, list_unreliable=[2, 18, 20], unreliable_fraction=0.5, unreliable_fracTrain=0.3, mean_unreliable=0.0, blur_method='add_noise', max_std_unreliable=30.0, list_uatk_add_noise=[24, 25, 26], mean_add_noise=0.0, std_add_noise=0.01, list_uatk_flip_sign=[0, 10, 11])
+2024-12-03 23:10:53,739 INFO _main.py 44:: #####################
+2024-12-03 23:10:53,739 INFO _main.py 45:: #####################
+2024-12-03 23:10:53,739 INFO _main.py 46:: #####################
+2024-12-03 23:10:53,739 INFO _main.py 47:: Aggregation Rule:	mudhog
+2024-12-03 23:10:53,739 INFO _main.py 48:: Data distribution:	dirichlet
+2024-12-03 23:10:53,739 INFO _main.py 49:: Attacks:	None 
+2024-12-03 23:10:53,740 INFO _main.py 50:: #####################
+2024-12-03 23:10:53,740 INFO _main.py 51:: #####################
+2024-12-03 23:10:53,740 INFO _main.py 52:: #####################

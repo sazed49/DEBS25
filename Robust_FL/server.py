@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 from copy import deepcopy
+import copy
 
 import torch
 import torch.nn.functional as F
@@ -10,15 +11,44 @@ import numpy as np
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from collections import defaultdict, Counter
 
-from utils import utils
-from utils.backdoor_semantic_utils import SemanticBackdoor_Utils
-from utils.backdoor_utils import Backdoor_Utils
+from tools import tools
+#from utils.backdoor_semantic_utils import SemanticBackdoor_Utils
+#from utils.backdoor_utils import Backdoor_Utils
 import time
 import json
+from concurrent.futures import ThreadPoolExecutor
+import numpy as np
+import torch
+import logging
 
 def find_separate_point(d):
     # d should be flatten and np or list
     d = sorted(d)
+
+    sep_point = 0
+    max_gap = 0
+    for i in range(len(d)-1):
+        if d[i+1] - d[i] > max_gap:
+            max_gap = d[i+1] - d[i]
+            sep_point = d[i] + max_gap/2
+    return sep_point
+
+def find_d1(d):
+    # d should be flatten and np or list
+    d = sorted(d)
+
+    sep_point = 0
+    max_gap = 0
+    for i in range(len(d)-1):
+        if d[i+1] - d[i] > max_gap:
+            max_gap = d[i+1] - d[i]
+            sep_point = d[i] + max_gap/2
+    return sep_point
+
+def find_d2(d):
+    # d should be flatten and np or list
+    d = sorted(d)
+
     sep_point = 0
     max_gap = 0
     for i in range(len(d)-1):
@@ -189,7 +219,7 @@ class Server():
         test_loss = 0
         correct = 0
         count = 0
-        nb_classes = 4 # for MNIST, Fashion-MNIST, CIFAR-10
+        nb_classes = 10 # for MNIST, Fashion-MNIST, CIFAR-10
         cf_matrix = torch.zeros(nb_classes, nb_classes)
         with torch.no_grad():
             for data, target in self.dataLoader:
@@ -285,11 +315,12 @@ class Server():
 
     def train(self, group):
         selectedClients = [self.clients[i] for i in group]
-        for i in group:
-          print("self clinets----",self.clients[i])
-        print("----selected clienst----",selectedClients)
+        print("selected clients",selectedClients)
+        # for i in group:
+        #   print("self clinets----",self.clients[i])
+        # print("----selected clienst----",selectedClients)
         for c in selectedClients:
-            print("----c in selected clients----",c)
+            #print("----c in selected clients----",c)
             c.train()
             c.update()
 
@@ -297,12 +328,12 @@ class Server():
             self.saveChanges(selectedClients)
 
         tic = time.perf_counter()
-        Delta = self.AR(selectedClients)
+        Delta = self.AR(selectedClients)   #agrregated model update computed using selected aggregation
         toc = time.perf_counter()
         logging.info(f"[Server] The aggregation takes {toc - tic:0.6f} seconds.\n")
 
         for param in self.model.state_dict():
-            self.model.state_dict()[param] += Delta[param]
+            self.model.state_dict()[param] += Delta[param]   #updating the global model
         self.iter += 1
 
     def saveChanges(self, clients):
@@ -310,7 +341,7 @@ class Server():
         Delta = deepcopy(self.emptyStates)
         deltas = [c.getDelta() for c in clients]
 
-        param_trainable = utils.getTrainableParameters(self.model)
+        param_trainable = tools.getTrainableParameters(self.model)
 
         param_nontrainable = [param for param in Delta.keys() if param not in param_trainable]
         for param in param_nontrainable:
@@ -325,7 +356,7 @@ class Server():
         saveAsPCA = False # True
         saveOriginal = True #False
         if saveAsPCA:
-            from utils import convert_pca
+            from tools import convert_pca
             proj_vec = convert_pca._convertWithPCA(Delta)
             savepath = f'{self.savePath}/pca_{self.iter}.pt'
             torch.save(proj_vec, savepath)
@@ -365,8 +396,15 @@ class Server():
             self.AR = self.net_mlp
         elif ar == 'mudhog':
             self.AR = self.mud_hog
-        elif ar == 'my_hog':
-            self.AR = self.my_hog
+        elif ar == 'minedetect':
+            self.AR = self.minedetect
+        elif ar == 'sign_flip':
+            self.AR = self.sign_flip
+        elif ar == 'new_detect_additive_noise':
+            self.AR = self.new_detect_additive_noise
+        elif ar == 'unreliable_clients':
+            self.AR = self.unreliable_clients
+        
         elif ar == 'fedavg_oracle':
             self.AR = self.fedavg_oracle
         else:
@@ -703,249 +741,573 @@ class Server():
         out = self.FedFuncWholeNet(normal_clients, lambda arr: torch.mean(arr, dim=-1, keepdim=True))
         return out
 
-    def my_hog(self, clients):
-        # long_HoGs for clustering targeted and untargeted attackers
-        # and for calculating angle > 90 for flip-sign attack
-        long_HoGs = {}
+    # def minedetect(self, clients):
+        
 
-        # normalized_sHoGs for calculating angle > 90 for flip-sign attack
-        normalized_sHoGs = {}
-        full_norm_short_HoGs = [] # for scan flip-sign each round
-        full_norm_real_delta=[]
+        
+    #     normalized_local_median = {}
+        
+    #     full_norm_real_delta=[]
+        
+    #     short_HoGs = {}
+    #     local_medians={}
+    #     real_deltas={}
+    #     flip_sign_id = set()
 
-        # L2 norm short HoGs are for detecting additive noise,
-        # or Gaussian/random noise untargeted attack
-        short_HoGs = {}
-        real_deltas={}
-
-        # STAGE 1: Collect long and short HoGs.
-        for i in range(self.num_clients):
-            # longHoGs
-            sum_hog_i = clients[i].get_sum_hog().detach().cpu().numpy()
-            L2_sum_hog_i = clients[i].get_L2_sum_hog().detach().cpu().numpy()
-            long_HoGs[i] = sum_hog_i
-
-            # shortHoGs
-            sHoG = clients[i].get_avg_grad().detach().cpu().numpy()
-            #logging.debug(f"sHoG={sHoG.shape}") # model's total parameters, cifar=sHoG=(11191262,)
-            L2_sHoG = np.linalg.norm(sHoG)
-            full_norm_short_HoGs.append(sHoG/L2_sHoG)
-            short_HoGs[i] = sHoG
-            # real delta
-            real_delta=clients[i].getRealValue().detach().cpu().numpy()
-            L2_real_delta = np.linalg.norm(real_delta)
-            full_norm_real_delta.append(real_delta/L2_real_delta)
-            real_deltas[i] = real_delta
+        
+    #     for i in range(self.num_clients):
+    #       local_median = clients[i].get_local_median().detach().cpu().numpy()
+    #       local_medians[i]=local_median
+    #       L2_local_median = np.linalg.norm(local_median)
+    #         #full_norm_real_delta.append(local_median/L2_local_median)
+    #       #[i] =local_median 
+    #       real_delta=clients[i].getRealValue().detach().cpu().numpy()
+    #       L2_real_delta = np.linalg.norm(real_delta)
+    #       full_norm_real_delta.append(real_delta/L2_real_delta)
+    #       real_deltas[i] = real_delta
+          
 
 
-            # Exclude the firmed malicious clients
-            if i not in self.mal_ids:
-                normalized_sHoGs[i] = sHoG/L2_sHoG
+          
+    #       if i not in self.mal_ids:
+    #             normalized_local_median[i] = local_median/L2_local_median
 
-        # STAGE 2: Clustering and find malicious clients
-        if self.iter >= self.tao_0:
-            # STEP 1: Detect FLIP_SIGN gradient attackers
-            """By using angle between normalized short HoGs to the median
-            of normalized short HoGs among good candidates.
-            NOTE: we tested finding flip-sign attack with longHoG, but it failed after long running.
-            """
-            flip_sign_id = set()
-            """
-            median_norm_shortHoG = np.median(np.array([v for v in normalized_sHoGs.values()]), axis=0)
-            for i, v in enumerate(full_norm_short_HoGs):
-                dot_prod = np.dot(median_norm_shortHoG, v)
-                if dot_prod < 0: # angle > 90
-                    flip_sign_id.add(i)
-                    #logging.debug("Detect FLIP_SIGN client={}".format(i))
-            logging.info(f"flip_sign_id={flip_sign_id}")
-            """
-            non_mal_sHoGs = dict(short_HoGs) # deep copy dict
-            for i in self.mal_ids:
-                non_mal_sHoGs.pop(i)
-            median_sHoG = np.median(np.array(list(non_mal_sHoGs.values())), axis=0)
-            for i, v in real_deltas.items():
-                #logging.info(f"median_sHoG={median_sHoG}, v={v}")
-                v = np.array(list(v))
-                d_cos = np.dot(median_sHoG, v)/(np.linalg.norm(median_sHoG)*np.linalg.norm(v))
-                if d_cos < 0: # angle > 90
-                    flip_sign_id.add(i)
-                    #logging.debug("Detect FLIP_SIGN client={}".format(i))
-            logging.info(f"flip_sign_id={flip_sign_id}")
-
-
-            # STEP 2: Detect UNTARGETED ATTACK
-            """ Exclude sign-flipping first, the remaining nodes include
-            {NORMAL, ADDITIVE-NOISE, TARGETED and UNRELIABLE}
-            we use DBSCAN to cluster them on raw gradients (raw short HoGs),
-            the largest cluster is normal clients cluster (C_norm). For the remaining raw gradients,
-            compute their Euclidean distance to the centroid (mean or median) of C_norm.
-            Then find the bi-partition of these distances, the group of smaller distances correspond to
-            unreliable, the other group correspond to additive-noise (Assumption: Additive-noise is fairly
-            large (since it is attack) while unreliable's noise is fairly small).
-            """
-
-            # Step 2.1: excluding sign-flipping nodes from raw short HoGs:
-            logging.info("===========using shortHoGs for detecting UNTARGETED ATTACK====")
-            for i in range(self.num_clients):
-                if i in flip_sign_id or i in self.flip_sign_ids:
-                    short_HoGs.pop(i)
-            id_sHoGs, value_sHoGs = np.array(list(short_HoGs.keys())), np.array(list(short_HoGs.values()))
-            # Find eps for MNIST and CIFAR:
-            """
-            dist_1 = {}
-            for k,v in short_HoGs.items():
-                if k != 1:
-                    dist_1[k] = np.linalg.norm(v - short_HoGs[1])
-                    logging.info(f"Euclidean distance between 1 and {k} is {dist_1[k]}")
-
-            logging.info(f"Average Euclidean distances between 1 and others {np.mean(list(dist_1.values()))}")
-            logging.info(f"Median Euclidean distances between 1 and others {np.median(list(dist_1.values()))}")
-            """
-
-            # DBSCAN is mandatory success for this step, KMeans failed.
-            # MNIST uses default eps=0.5, min_sample=5
-            # CIFAR uses eps=50, min_sample=5 (based on heuristic evaluation Euclidean distance of grad of RestNet18.
-            start_t = time.time()
-            cluster_sh = DBSCAN(eps=self.dbscan_eps, n_jobs=-1,
-                min_samples=self.dbscan_min_samples).fit(value_sHoGs)
-            t_dbscan = time.time() - start_t
-            #logging.info(f"CLUSTER DBSCAN shortHoGs took {t_dbscan}[s]")
-            # TODO: comment out this line
-            logging.info("labels cluster_sh= {}".format(cluster_sh.labels_))
-            offset_normal_ids = find_majority_id(cluster_sh)
-            normal_ids = id_sHoGs[list(offset_normal_ids)]
-            normal_sHoGs = value_sHoGs[list(offset_normal_ids)]
-            normal_cent = np.median(normal_sHoGs, axis=0)
-            logging.debug(f"offset_normal_ids={offset_normal_ids}, normal_ids={normal_ids}")
-
-            # suspicious ids of untargeted attacks and unreliable or targeted attacks.
-            offset_uAtk_ids = np.where(cluster_sh.labels_ == -1)[0]
-            sus_uAtk_ids = id_sHoGs[list(offset_uAtk_ids)]
-            logging.info(f"SUSPECTED UNTARGETED {sus_uAtk_ids}")
-
-            # suspicious_ids consists both additive-noise, targeted and unreliable clients:
-            suspicious_ids = [i for i in id_sHoGs if i not in normal_ids] # this includes sus_uAtk_ids
-            logging.debug(f"suspicious_ids={suspicious_ids}")
-            d_normal_sus = {} # distance from centroid of normal to suspicious clients.
-            for sid in suspicious_ids:
-                d_normal_sus[sid] = np.linalg.norm(short_HoGs[sid]-normal_cent)
-
-            # could not find separate points only based on suspected untargeted attacks.
-            #d_sus_uAtk_values = [d_normal_sus[i] for i in sus_uAtk_ids]
-            #d_separate = find_separate_point(d_sus_uAtk_values)
-            d_separate = find_separate_point(list(d_normal_sus.values()))
-            logging.debug(f"d_normal_sus={d_normal_sus}, d_separate={d_separate}")
-            sus_tAtk_uRel_id0, uAtk_id = set(), set()
-            for k, v in d_normal_sus.items():
-                if v > d_separate and k in sus_uAtk_ids:
-                    uAtk_id.add(k)
-                else:
-                    sus_tAtk_uRel_id0.add(k)
-            logging.info(f"This round UNTARGETED={uAtk_id}, sus_tAtk_uRel_id0={sus_tAtk_uRel_id0}")
+    #       # Calculate the global median over all clients' local medians
+    #       #global_median = np.median(np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #                                      #for j in range(self.num_clients)]), axis=0)
+    #     flip_sign_id = set()
+    #     global_median = np.median(np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #                                      for j in range(self.num_clients)]), axis=0)
+    #       # Compare the client's local median with the global median to detect sign flip
+    #       # Compute the dot product to check similarity
+    #     for i, v in local_medians.items():
+    #             #logging.info(f"median_sHoG={median_sHoG}, v={v}")
+    #             v = np.array(list(v))
+    #             d_cos = np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
+    #             if d_cos < 0: # angle > 90
+    #                 print(f"Sign-flip detected for client {i}")
+    #                 flip_sign_id.add(i)
+    #                 #logging.debug("Detect FLIP_SIGN client={}".format(i))
+    #     logging.info(f"flip_sign_id={flip_sign_id}")
+    #     #dot_product = np.dot(local_median.flatten(), global_median.flatten())
+    #     #flip_sign_id = set()
+    #       # Detect whether a sign flip is present (negative dot product indicates sign flip)
+    #     #if dot_product < 0:
+    #     #print(f"Sign-flip detected for client {i}")
+    #         #flip_sign_id.add(i)
+    #         #print("flip--->",flip_sign_id)
+    #         #print("data")
+    #       #else:
+    #         #print(f"Client {i} behaving normally.")
+           
+    #       #local_median=clients[i].get_local_median().detach().cpu().numpy()
+    #         #print("local median->",local_median)
+    #         #print("here in server 757")
+    #     L2_local_median = np.linalg.norm(local_median)
+    #         #full_norm_real_delta.append(local_median/L2_local_median)
+    #       #[i] =local_median 
+    #     real_delta=clients[i].getRealValue().detach().cpu().numpy()
+    #     L2_real_delta = np.linalg.norm(real_delta)
+    #     full_norm_real_delta.append(real_delta/L2_real_delta)
+    #     real_deltas[i] = real_delta
+    #       #flip_sign_id = set()
 
 
-            # STEP 3: Detect TARGETED ATTACK
-            """
-              - First excluding flip_sign and untargeted attack from.
-              - Using KMeans (K=2) based on Euclidean distance of
-                long_HoGs==> find minority ids.
-            """
-            for i in range(self.num_clients):
-                if i in self.flip_sign_ids or i in flip_sign_id:
-                    if i in long_HoGs:
-                        long_HoGs.pop(i)
-                if i in uAtk_id or i in self.uAtk_ids:
-                    if i in long_HoGs:
-                        long_HoGs.pop(i)
+    #         # Exclude the firmed malicious clients
+    #     if i not in self.mal_ids:
+    #             normalized_local_median[i] = local_median/L2_local_median
 
-            # Using Euclidean distance is as good as cosine distance (which used in MNIST).
-            logging.info("=======Using LONG HOGs for detecting TARGETED ATTACK========")
-            tAtk_id = find_targeted_attack(long_HoGs)
+       
+        
+           
+             
+           
+        
+    #     non_mal_sHoGs=dict(local_medians) #non_mal_local_medians
+    #     for i in self.mal_ids:
+    #             non_mal_sHoGs.pop(i)
+    #     out1={}
+    #     out2={}
+    #     global_median=np.median(np.array(list(non_mal_sHoGs.values())), axis=0)
+    #     for i,v in local_medians.items():
+    #             #out1[i]=np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
+    #           out2[i] = np.linalg.norm(global_median-local_medians[i])
+          
 
-            # Aggregate, count and record ATTACKERs:
-            self.add_mal_id(flip_sign_id, uAtk_id, tAtk_id)
-            logging.info("OVERTIME MALICIOUS client ids ={}".format(self.mal_ids))
+    #     t1= find_separate_point(list(out1.values()))
+    #     t2=find_separate_point(list(out2.values()))
 
-            # STEP 4: UNRELIABLE CLIENTS
-            """using normalized short HoGs (normalized_sHoGs) to detect unreliable clients
-            1st: remove all malicious clients (manipulate directly).
-            2nd: find angles between normalized_sHoGs to the median point
-            which mostly normal point and represent for aggreation (e.g., Median method).
-            3rd: find confident mid-point. Unreliable clients have larger angles
-            or smaller cosine similarities.
-            """
-            """
-            for i in self.mal_ids:
-                if i in normalized_sHoGs:
-                    normalized_sHoGs.pop(i)
+            
+    #     uAtk_id = set()
+    #       # for i, v in real_deltas.items():
+    #       #       #logging.info(f"median_sHoG={median_sHoG}, v={v}")
+    #       #       v = np.array(list(v))
+    #       #       cos = np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
+    #       #       if cos < 0: # angle > 90
+    #       #           flip_sign_id.add(i)
+    #       #           #logging.debug("Detect FLIP_SIGN client={}".format(i))
+    #       #       # if v<t1:
+    #       #       #     self.unreliable_ids.add(k)
+    #     for k, v in out2.items():
+              
+    #         if v> t2:
+    #             uAtk_id.add(k)
+    #             #total_detected+=1
+    #     for i in self.mal_ids:
+    #             if i in short_HoGs:
+    #                 local_medians.pop(i)
+    #     global_median = np.median(np.array(list(local_medians.values())), axis=0)
+    #     angle_sHoGs = {}
+    #     for i, v in local_medians.items():
+    #             out1[i] = np.dot(global_median, v)/(np.linalg.norm(global_median)*np.linalg.norm(v))
 
-            angle_normalized_sHoGs = {}
-            # update this value again after excluding malicious clients
-            median_norm_shortHoG = np.median(np.array(list(normalized_sHoGs.values())), axis=0)
-            for i, v in normalized_sHoGs.items():
-                angle_normalized_sHoGs[i] = np.dot(median_norm_shortHoG, v)
+    #     t1 = find_separate_point(list(out1.values()))
+    #     normal_id, uRel_id = set(), set()
+    #     for k, v in out1.items():
+    #             if v < t1: # larger angle, smaller cosine similarity
+    #                 uRel_id.add(k)
+    #             else:
+    #                 normal_id.add(k)
+            
+    #     for k in range(self.num_clients):
+    #             if k in uRel_id:
+    #                 self.count_unreliable[k] += 1
+    #                 if self.count_unreliable[k] > self.delay_decision:
+    #                     self.unreliable_ids.add(k)
+    #                     #total_detected+=1
+    #             # do this before decreasing count
+    #             if self.count_unreliable[k] == 0 and k in self.unreliable_ids:
+    #                 self.unreliable_ids.remove(k)
+    #             if k not in uRel_id and self.count_unreliable[k] > 0:
+    #                 self.count_unreliable[k] -= 1
+    #     normal_clients = []
+    #     for i, client in enumerate(clients):
+    #             if i not in self.mal_ids and  i not in uAtk_id:
+    #                 normal_clients.append(client)
+    #     self.normal_clients = normal_clients
+    #     logging.info(f"flip_sign_id={flip_sign_id}")
+    #     logging.info(f"additve id={uAtk_id}")
+    #     logging.info(f"unreliable id ={self.unreliable_ids}")
+    #     print(" calling fed-----------------------------------------")
+    #     print("total detected>>>>>>>>>>",len(flip_sign_id)+len(uAtk_id)+len(self.unreliable_ids))
+    #     out = self.FedFuncWholeNet(normal_clients, lambda arr: torch.mean(arr, dim=-1, keepdim=True))
+    #     return out
 
-            angle_sep_nsH = find_separate_point(list(angle_normalized_sHoGs.values()))
-            normal_id, uRel_id = set(), set()
-            for k, v in angle_normalized_sHoGs.items():
-                if v < angle_sep_nsH: # larger angle, smaller cosine similarity
-                    uRel_id.add(k)
-                else:
-                    normal_id.add(k)
-            """
-            for i in self.mal_ids:
-                if i in short_HoGs:
-                    short_HoGs.pop(i)
-
-            angle_sHoGs = {}
-            # update this value again after excluding malicious clients
-            median_sHoG = np.median(np.array(list(short_HoGs.values())), axis=0)
-            for i, v in short_HoGs.items():
-                angle_sHoGs[i] = np.dot(median_sHoG, v)/(np.linalg.norm(median_sHoG)*np.linalg.norm(v))
-
-            angle_sep_sH = find_separate_point(list(angle_sHoGs.values()))
-            normal_id, uRel_id = set(), set()
-            for k, v in angle_sHoGs.items():
-                if v < angle_sep_sH: # larger angle, smaller cosine similarity
-                    uRel_id.add(k)
-                else:
-                    normal_id.add(k)
-            logging.info(f"This round UNRELIABLE={uRel_id}, normal_id={normal_id}")
-            #logging.debug(f"anlge_normalized_sHoGs={angle_normalized_sHoGs}, angle_sep_nsH={angle_sep_nsH}")
-            logging.debug(f"anlge_sHoGs={angle_sHoGs}, angle_sep_nsH={angle_sep_sH}")
-
-            for k in range(self.num_clients):
-                if k in uRel_id:
-                    self.count_unreliable[k] += 1
-                    if self.count_unreliable[k] > self.delay_decision:
-                        self.unreliable_ids.add(k)
-                # do this before decreasing count
-                if self.count_unreliable[k] == 0 and k in self.unreliable_ids:
-                    self.unreliable_ids.remove(k)
-                if k not in uRel_id and self.count_unreliable[k] > 0:
-                    self.count_unreliable[k] -= 1
-            logging.info("UNRELIABLE clients ={}".format(self.unreliable_ids))
-
-            normal_clients = []
-            for i, client in enumerate(clients):
-                if i not in self.mal_ids and i not in tAtk_id and i not in uAtk_id:
-                    normal_clients.append(client)
-            self.normal_clients = normal_clients
-        else:
-            normal_clients = clients
-        out = self.FedFuncWholeNet(normal_clients, lambda arr: torch.mean(arr, dim=-1, keepdim=True))
-        return out
+      
     
       
+    #Use this for aggregated run
+
+    def sign_flip(self, clients):
+      flip_sign_id = set()  # Set to store client IDs with sign flips
+
+      # Detect sign flips
+      for i in range(self.num_clients):
+          # Get client's local median
+          local_avg = clients[i].get_local_median().detach().cpu().numpy()
+          
+          global_avg = np.mean(
+              np.array([clients[j].get_local_median().detach().cpu().numpy() 
+              for j in range(self.num_clients)]), 
+              axis=0  
+            )
+
+          #print("global median",global_median)
+          #print("Length of global median",len(global_median))
+      
+
+          # Compare the client's local median with the global median
+          dot_product = np.dot(local_avg.flatten(), global_avg.flatten())
+          #print("angle=",dot_product)
+
+          # Detect whether a sign flip is present
+          if dot_product < 0:
+              print(f"Sign-flip detected for client {i}")
+              flip_sign_id.add(i)  # Add client ID to the set
+          #else:
+              #print(f"Client {i} behaving normally.")
+      logging.info(f"flip_sign_id={flip_sign_id}")
+            
+
+      return flip_sign_id
+
+    
+
+    
+    
+    # use this for individual run
+
+    # def sign_flip(self, clients):
+    #   flip_sign_id = set()  # Set to store client IDs with sign flips
+
+    #   # Detect sign flips
+    #   for i in range(self.num_clients):
+    #       # Get client's local median
+    #       local_median = clients[i].get_local_median().detach().cpu().numpy()
+          
+    #       global_median = np.mean(
+    #           np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #           for j in range(self.num_clients)]), 
+    #           axis=0  
+    #         )
+
+    #       #print("global median",global_median)
+    #       #print("Length of global median",len(global_median))
+      
+
+    #       # Compare the client's local median with the global median
+    #       dot_product = np.dot(local_median.flatten(), global_median.flatten())
+    #       #print("angle=",dot_product)
+
+    #       # Detect whether a sign flip is present
+    #       if dot_product < 0:
+    #           print(f"Sign-flip detected for client {i}")
+    #           flip_sign_id.add(i)  # Add client ID to the set
+    #       #else:
+    #           #print(f"Client {i} behaving normally.")
+
+    #   # Exclude clients with sign flips and select normal clients
+    #   normal_clients = [clients[i] for i in range(self.num_clients) if i not in flip_sign_id]
+    
+    #   # Aggregate only from normal clients using FedFuncWholeNet
+    #   if normal_clients:
+    #       out = self.FedFuncWholeNet(
+    #           normal_clients, 
+    #           lambda arr: torch.mean(arr, dim=-1, keepdim=True)
+    #       )
+    #       print("\nAggregation completed for normal clients.")
+    #   else:
+    #       print("\nNo normal clients to aggregate.")
+    #       out = None  # No output if all clients are malicious
+
+    #   # Print results
+    #   #print("\nOutput of FedFuncWholeNet (normal clients):", out)
+    #   print("\nClients with sign flips excluded:", sorted(flip_sign_id))
+    #   logging.info(f"flip_sign_id={flip_sign_id}")
+
+    #   return out
+
+    
+    #use this for aggregated run
+    def new_detect_additive_noise(self, clients):
+      noise_detected_ids = set()
+
+      local_avgs = np.array([clients[j].get_local_median().detach().cpu().numpy() 
+                              for j in range(self.num_clients)])
+      global_avg = np.median(local_avgs, axis=0)
+      gradient_magnitudes = np.linalg.norm(local_avgs, axis=1)
+      global_magnitude = np.median(gradient_magnitudes)
+
+      if not hasattr(self, "historical_medians"):
+          self.historical_medians = np.zeros((self.num_clients, local_avgs.shape[1], 5))
+
+      historical_medians_copy = self.historical_medians.copy()
+      historical_medians_copy = np.roll(historical_medians_copy, shift=-1, axis=-1)
+      historical_medians_copy[:, :, -1] = local_avgs
+
+      local_variances = np.var(historical_medians_copy, axis=-1).mean(axis=1)
+      deviation_threshold = np.median(local_variances) + 2 * np.std(local_variances)
+      magnitude_threshold = global_magnitude + 2 * np.std(gradient_magnitudes)
+
+      for i in range(self.num_clients):
+          if local_variances[i] > deviation_threshold or gradient_magnitudes[i] > magnitude_threshold:
+              print(f"New Additive noise detected for client {i}")
+              noise_detected_ids.add(i)
+    
+      print("Clients with additive noise excluded:", sorted(noise_detected_ids))
+      logging.info(f"noise_detected_ids={noise_detected_ids}")
+
+      return noise_detected_ids
+
+
+    
+    
+    #use this for individual run
+
+    # def new_detect_additive_noise(self, clients):
+    #     noise_detected_ids = set()  # Set to store client IDs with additive noise
+
+    #     # Compute local medians
+    #     local_medians = np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #                           for j in range(self.num_clients)])
+
+    #     # Compute global median (more robust than mean)
+    #     global_median = np.median(local_medians, axis=0)
+
+    #     # Compute the gradient magnitudes of clients
+    #     gradient_magnitudes = np.linalg.norm(local_medians, axis=1)
+    #     global_magnitude = np.median(gradient_magnitudes)  # Use median to be robust against outliers
+
+    #     # Compute the variance of local medians over past rounds
+    #     if not hasattr(self, "historical_medians"):
+    #         self.historical_medians = np.zeros((self.num_clients, local_medians.shape[1], 5))
+
+    #     # Shift historical data and store the latest local median
+    #     self.historical_medians = np.roll(self.historical_medians, shift=-1, axis=-1)
+    #     self.historical_medians[:, :, -1] = local_medians
+
+    #     # Compute variance of medians over past 5 rounds
+    #     local_variances = np.var(self.historical_medians, axis=-1).mean(axis=1)
+
+    #     # Set thresholds for detecting additive noise
+    #     deviation_threshold = np.median(local_variances) + 2 * np.std(local_variances)
+    #     magnitude_threshold = global_magnitude + 2 * np.std(gradient_magnitudes)
+
+    #     # Detect additive noise attackers
+    #     for i in range(self.num_clients):
+    #         if local_variances[i] > deviation_threshold or gradient_magnitudes[i] > magnitude_threshold:
+    #             print(f"New Additive noise detected for client {i}")
+    #             noise_detected_ids.add(i)
+
+    #     # Exclude noisy clients and select normal clients
+    #     normal_clients = [clients[i] for i in range(self.num_clients) if i not in noise_detected_ids]
+
+    #     # Aggregate only from normal clients using FedFuncWholeNet
+    #     if normal_clients:
+    #         out = self.FedFuncWholeNet(
+    #             normal_clients, 
+    #             lambda arr: torch.mean(arr, dim=-1, keepdim=True)
+    #         )
+    #         print("\nAggregation completed for normal clients.")
+    #     else:
+    #         print("\nNo normal clients to aggregate.")
+    #         out = None  # No output if all clients are malicious
+
+    #     # Print results
+    #     print("\nClients with additive noise excluded:", sorted(noise_detected_ids))
+    #     logging.info(f"noise_detected_ids={noise_detected_ids}")
+
+    #     return out
+
+    
+
+
+    
+
+    #use this for aggregated run
+    def unreliable_clients(self, clients):
+      unreliable_ids = set()
+      local_avgs = np.array([clients[j].get_local_median().detach().cpu().numpy() 
+                              for j in range(self.num_clients)])
+      #global_median = np.median(local_medians, axis=0)
+      global_avg = np.mean(
+              np.array([clients[j].get_local_median().detach().cpu().numpy() 
+              for j in range(self.num_clients)]), 
+              axis=0  
+            )
+      deviations = np.linalg.norm(local_avgs - global_avg, axis=1)
+      mean_deviation = np.mean(deviations)
+      std_deviation = np.std(deviations)
+      threshold = mean_deviation + std_deviation
+
+      for i, local_median in enumerate(local_avgs):
+          deviation = np.linalg.norm(local_median - global_avg)
+          if deviation > threshold:
+              print(f"Unreliable client {i}")
+              unreliable_ids.add(i)
+    
+      print("Unreliable clients detected:", sorted(unreliable_ids))
+      logging.info(f"unreliable_ids={unreliable_ids}")
+
+      return unreliable_ids
+
+      
+    
+    
+    
+    #use this for individual run
+
+    # def unreliable_clients(self, clients):
+    #   unreliable_ids = set()  # Set to store client IDs with additive noise
+
+    #   # Calculate the global median over all clients' local medians
+    #   local_medians = np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #                           for j in range(self.num_clients)])
+    #   #global_median = np.median(local_medians, axis=0)
+    #   global_median = np.mean(
+    #           np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #           for j in range(self.num_clients)]), 
+    #           axis=0  
+    #         )
+
+    #   # Calculate thresholds for detecting outliers
+    #   deviations = np.linalg.norm(local_medians - global_median, axis=1)  # Euclidean distance
+    #   mean_deviation = np.mean(deviations)
+    #   std_deviation = np.std(deviations)
+
+    #   # Set a threshold (e.g., 2 standard deviations from the mean)
+    #   threshold = mean_deviation +   std_deviation
+
+    #   # Detect additive noise
+    #   for i, local_median in enumerate(local_medians):
+    #       deviation = np.linalg.norm(local_median - global_median)
+
+    #       if deviation > threshold:
+    #           print(f"Unreliable client {i}")
+    #           unreliable_ids.add(i)  # Add client ID to the set
+      
+
+    #   # Exclude noisy clients and select normal clients
+    #   normal_clients = [clients[i] for i in range(self.num_clients) if i not in unreliable_ids]
+
+    #   # Aggregate only from normal clients using FedFuncWholeNet
+    #   if normal_clients:
+    #       out = self.FedFuncWholeNet(
+    #           normal_clients, 
+    #           lambda arr: torch.mean(arr, dim=-1, keepdim=True)
+    #       )
+    #       print("\nAggregation completed for normal clients.")
+    #   else:
+    #       print("\nNo normal clients to aggregate.")
+    #       out = None  # No output if all clients are malicious
+
+    #   # Print results
+    #   print("\nUnreliable:", sorted(unreliable_ids))
+    #   logging.info(f"unreliable_ids={unreliable_ids}")
+
+    #   return out
+    
+
+    
+    
+
+    
+    
+    # sob function alada call na kore ek jaigai serially kaj korchi
+    # def detect_and_aggregate(self, clients):
+    #     flip_sign_id = set()  # Set to store client IDs with sign flips
+    #     noise_detected_ids = set()  # Set to store client IDs with additive noise
+    #     unreliable_ids = set()  # Set to store client IDs with unreliable behavior
+
+    #     # Compute local medians
+    #     local_medians = np.array([clients[j].get_local_median().detach().cpu().numpy() 
+    #                           for j in range(self.num_clients)])
+    
+    #     # Compute global median (more robust than mean)
+    #     global_median = np.median(local_medians, axis=0)
+    #     #global_sign=np.median(local_medians, axis=0)
+    
+    #     # Compute the gradient magnitudes of clients
+    #     gradient_magnitudes = np.linalg.norm(local_medians, axis=1)
+    #     global_magnitude = np.median(gradient_magnitudes)  # Use median to be robust against outliers
+
+    #     # Compute the variance of local medians over past rounds
+    #     if not hasattr(self, "historical_medians"):
+    #         self.historical_medians = np.zeros((self.num_clients, local_medians.shape[1], 5))
+
+    #     # Shift historical data and store the latest local median
+    #     self.historical_medians = np.roll(self.historical_medians, shift=-1, axis=-1)
+    #     self.historical_medians[:, :, -1] = local_medians
+
+    #     # Compute variance of medians over past 5 rounds
+    #     local_variances = np.var(self.historical_medians, axis=-1).mean(axis=1)
+
+    #     # Set thresholds for detecting additive noise
+    #     deviation_threshold = np.median(local_variances) + 2 * np.std(local_variances)
+    #     magnitude_threshold = global_magnitude + 2 * np.std(gradient_magnitudes)
+
+    #     # Calculate thresholds for detecting outliers
+    #     deviations = np.linalg.norm(local_medians - global_median, axis=1)  # Euclidean distance
+    #     mean_deviation = np.mean(deviations)
+    #     std_deviation = np.std(deviations)
+    #     outlier_threshold = mean_deviation + 2 * std_deviation
+
+    #     # Detect sign flips, additive noise, and unreliable clients
+    #     for i in range(self.num_clients):
+    #         local_median = local_medians[i]
+    #         dot_product = np.dot(local_median.flatten(), global_median.flatten())
+    #         deviation = np.linalg.norm(local_median - global_median)
+
+    #         if dot_product < 0:
+    #             print(f"Sign-flip detected for client {i}")
+    #             flip_sign_id.add(i)
+    #         if local_variances[i] > deviation_threshold or gradient_magnitudes[i] > magnitude_threshold:
+    #             print(f"Additive noise detected for client {i}")
+    #             noise_detected_ids.add(i)
+    #         if deviation > outlier_threshold:
+    #             print(f"Unreliable client {i}")
+    #             unreliable_ids.add(i)
+
+    #     # Combine all detected IDs
+    #     all_detected_ids = flip_sign_id.union(noise_detected_ids)
+
+    #     # Exclude detected clients and select normal clients
+    #     normal_clients = [clients[i] for i in range(self.num_clients) if i not in all_detected_ids]
+
+    #     # Aggregate only from normal clients using FedFuncWholeNet
+    #     if normal_clients:
+    #         out = self.FedFuncWholeNet(
+    #             normal_clients, 
+    #             lambda arr: torch.mean(arr, dim=-1, keepdim=True)
+    #         )
+    #         print("\nAggregation completed for normal clients.")
+    #     else:
+    #         print("\nNo normal clients to aggregate.")
+    #         out = None  # No output if all clients are malicious
+
+    #     # Print results
+    #     print("\nClients with sign flips excluded:", sorted(flip_sign_id))
+    #     print("\nClients with additive noise excluded:", sorted(noise_detected_ids))
+    #     print("\nUnreliable clients excluded:", sorted(unreliable_ids))
+    #     logging.info(f"flip_sign_id={flip_sign_id}")
+    #     logging.info(f"noise_detected_ids={noise_detected_ids}")
+    #     logging.info(f"unreliable_ids={unreliable_ids}")
+
+    #     return out
+
 
 
 
 
     
+    # three functions were called to return individual attack ids
+    def minedetect(self, clients):
+     
+      clients1 = copy.deepcopy(clients)
+      clients2 = copy.deepcopy(clients)
+      clients3 = copy.deepcopy(clients)
+      # Detect attacks
+      flip_sign_id = self.sign_flip(clients1)
+      #print("detected fliped sign id-----",flip_sign_id)
+      
+      noise_detected_ids = self.new_detect_additive_noise(clients2)
+      unreliable_ids = self.unreliable_clients(clients3)
+
+      # Combine all detected attack IDs
+      all_attacks = flip_sign_id | noise_detected_ids
+
+      # Select normal clients
+      normal_clients = [clients[i] for i in range(self.num_clients) if i not in all_attacks]
+
+      # Aggregate only from normal clients
+      if normal_clients:
+        out = self.FedFuncWholeNet(
+            normal_clients, 
+            lambda arr: torch.mean(arr, dim=-1, keepdim=True)
+        )
+        print("\nAggregation completed for normal clients.")
+      else:
+          print("\nNo normal clients to aggregate.")
+          out = None  # No output if all clients are malicious
+
+      print("\nAll detected attack IDs:", sorted(all_attacks))
+      logging.info(f"all_attacks={all_attacks}")
+
+      return out
+
+
+
+
+    
+
+
+
+
     def FedFuncWholeNet(self, clients, func):
         '''
         The aggregation rule views the update vectors as stacked vectors (1 by d by n).
         '''
+        print("clients------------------------------------",len(clients))
         Delta = deepcopy(self.emptyStates)
         deltas = [c.getDelta() for c in clients]
         # size is relative to number of samples, actually it is number of batches
@@ -954,12 +1316,12 @@ class Server():
         total_s = sum(sizes)
         logging.info(f"clients' sizes={sizes}, total={total_s}")
         weights = [s/total_s for s in sizes]
-        vecs = [utils.net2vec(delta) for delta in deltas]
+        vecs = [tools.net2vec(delta) for delta in deltas]
         vecs = [vec for vec in vecs if torch.isfinite(vec).all().item()]
         weighted_vecs = [w*v for w,v in zip(weights, vecs)]
         result = func(torch.stack(vecs, 1).unsqueeze(0))  # input as 1 by d by n
         result = result.view(-1)
-        utils.vec2net(result, Delta)
+        tools.vec2net(result, Delta)
         return Delta
 
     def FedFuncWholeStateDict(self, clients, func):
@@ -969,7 +1331,7 @@ class Server():
         Delta = deepcopy(self.emptyStates)
         deltas = [c.getDelta() for c in clients]
         # sanity check, remove update vectors with nan/inf values
-        deltas = [delta for delta in deltas if torch.isfinite(utils.net2vec(delta)).all().item()]
+        deltas = [delta for delta in deltas if torch.isfinite(tools.net2vec(delta)).all().item()]
 
         resultDelta = func(deltas)
 

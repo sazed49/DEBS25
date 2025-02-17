@@ -35,8 +35,9 @@ class customDataLoader():
         self.stats = defaultdict(list)
         self.bsz = bsz
         self.partition_list = self.getPartitions()
-        print(self.stats)
+        #print(self.stats)
         num_unique_items = len(np.unique(np.concatenate(self.partition_list)))
+        #print("Here Partition List ",self.partition_list)
         if (len(dataset) != num_unique_items):
             print(
                 f"Number of unique items in partitions ({num_unique_items}) is not equal to the size of dataset ({len(dataset)}), some data may not be included")
@@ -48,6 +49,7 @@ class customDataLoader():
         return self.size
 
     def __getitem__(self, rank):
+        #print("Rank ",rank, " Size ",self.size)
         assert rank < self.size, 'partition index should be smaller than the size of the partition'
         partition = Partition(self.dataset, self.partition_list[rank])
         partition.classes = self.classes
@@ -57,7 +59,7 @@ class customDataLoader():
 
 
 class iidLoader(customDataLoader):
-    def __init__(self, size, dataset, bsz=128):
+    def __init__(self, size, dataset, bsz=64):
         super(iidLoader, self).__init__(size, dataset, bsz)
 
     def getPartitions(self):
@@ -76,7 +78,7 @@ class iidLoader(customDataLoader):
 
 
 class byLabelLoader(customDataLoader):
-    def __init__(self, size, dataset, bsz=128):
+    def __init__(self, size, dataset, bsz=64):
         super(byLabelLoader, self).__init__(size, dataset, bsz)
 
     def getPartitions(self):
@@ -93,7 +95,7 @@ class byLabelLoader(customDataLoader):
 
 
 class dirichletLoader(customDataLoader):
-    def __init__(self, size, dataset, alpha=0.9, bsz=128):
+    def __init__(self, size, dataset, alpha=0.9, bsz=64):
         # alpha is used in getPartition,
         # and getPartition is used in parent constructor
         # hence need to initialize alpha first

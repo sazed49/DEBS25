@@ -1,0 +1,925 @@
+2024-12-03 18:00:07,045 INFO _main.py 39:: ################################################################
+2024-12-03 18:00:07,046 INFO _main.py 41:: #                              batch_size: 64                  #
+2024-12-03 18:00:07,047 INFO _main.py 41:: #                         test_batch_size: 64                  #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                                  epochs: 10                  #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                               optimizer: SGD                 #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                                      lr: 0.01                #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                                momentum: 0.9                 #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                            weight_decay: 0.0001              #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                                    seed: 1                   #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                            log_interval: 11                  #
+2024-12-03 18:00:07,048 INFO _main.py 41:: #                             num_clients: 40                  #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                           output_folder: experiments         #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                                 dataset: cifar               #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                             loader_type: dirichlet           #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                             loader_path: ./data/loader.pk    #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                                      AR: my_hog              #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                     n_attacker_backdoor: 0                   #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                        backdoor_trigger: [0, 0, 1, 1]        #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                   n_attacker_omniscient: 0                   #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                        omniscient_scale: 1                   #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                                 attacks: None                #
+2024-12-03 18:00:07,049 INFO _main.py 41:: #                      save_model_weights: False               #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                         experiment_name: sExp4Ba_40ep_cifar_my_hog_40C_5#
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                          path_to_aggNet: None                #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                                  device: cuda                #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                            inner_epochs: 4                   #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                                 verbose: True                #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                         list_unreliable: [2, 18, 20]         #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                     unreliable_fraction: 0.5                 #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                    unreliable_fracTrain: 0.3                 #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                         mean_unreliable: 0.0                 #
+2024-12-03 18:00:07,050 INFO _main.py 41:: #                             blur_method: add_noise           #
+2024-12-03 18:00:07,051 INFO _main.py 41:: #                      max_std_unreliable: 30.0                #
+2024-12-03 18:00:07,051 INFO _main.py 41:: #                     list_uatk_add_noise: [24, 25, 26]        #
+2024-12-03 18:00:07,051 INFO _main.py 41:: #                          mean_add_noise: 0.0                 #
+2024-12-03 18:00:07,051 INFO _main.py 41:: #                           std_add_noise: 0.01                #
+2024-12-03 18:00:07,051 INFO _main.py 41:: #                     list_uatk_flip_sign: [0, 10, 11]         #
+2024-12-03 18:00:07,051 INFO _main.py 42:: ################################################################
+2024-12-03 18:00:07,051 INFO _main.py 43:: Namespace(batch_size=64, test_batch_size=64, epochs=10, optimizer='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001, seed=1, log_interval=11, num_clients=40, output_folder='experiments', dataset='cifar', loader_type='dirichlet', loader_path='./data/loader.pk', AR='my_hog', n_attacker_backdoor=0, backdoor_trigger=[0, 0, 1, 1], n_attacker_omniscient=0, omniscient_scale=1, attacks=None, save_model_weights=False, experiment_name='sExp4Ba_40ep_cifar_my_hog_40C_5', path_to_aggNet=None, device='cuda', inner_epochs=4, verbose=True, list_unreliable=[2, 18, 20], unreliable_fraction=0.5, unreliable_fracTrain=0.3, mean_unreliable=0.0, blur_method='add_noise', max_std_unreliable=30.0, list_uatk_add_noise=[24, 25, 26], mean_add_noise=0.0, std_add_noise=0.01, list_uatk_flip_sign=[0, 10, 11])
+2024-12-03 18:00:07,051 INFO _main.py 44:: #####################
+2024-12-03 18:00:07,051 INFO _main.py 45:: #####################
+2024-12-03 18:00:07,051 INFO _main.py 46:: #####################
+2024-12-03 18:00:07,052 INFO _main.py 47:: Aggregation Rule:	my_hog
+2024-12-03 18:00:07,052 INFO _main.py 48:: Data distribution:	dirichlet
+2024-12-03 18:00:07,052 INFO _main.py 49:: Attacks:	None 
+2024-12-03 18:00:07,052 INFO _main.py 50:: #####################
+2024-12-03 18:00:07,052 INFO _main.py 51:: #####################
+2024-12-03 18:00:07,052 INFO _main.py 52:: #####################
+2024-12-03 18:00:10,236 INFO server.py 366:: SET DBSCAN eps=18, min_samples=12
+2024-12-03 18:00:10,239 INFO _main.py 135:: [1-normal, 0-malicious] label =tensor([0., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 0., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1.])
+2024-12-03 18:00:10,504 INFO malicious_clients.py 123:: init ATTACK OMNISCIENT Client 0
+2024-12-03 18:00:10,992 INFO malicious_clients.py 18:: init UNRELIABLE Client 2
+2024-12-03 18:00:13,209 INFO malicious_clients.py 123:: init ATTACK OMNISCIENT Client 10
+2024-12-03 18:00:13,483 INFO malicious_clients.py 123:: init ATTACK OMNISCIENT Client 11
+2024-12-03 18:00:15,378 INFO malicious_clients.py 18:: init UNRELIABLE Client 18
+2024-12-03 18:00:15,916 INFO malicious_clients.py 18:: init UNRELIABLE Client 20
+2024-12-03 18:00:17,039 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 24
+2024-12-03 18:00:17,308 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 25
+2024-12-03 18:00:17,577 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 26
+2024-12-03 18:00:21,225 INFO server.py 211:: [Server] Start testing
+2024-12-03 18:00:25,380 INFO server.py 235:: [Server] Test set: Average loss: 2.3744, Accuracy: 907/10000 (9.07%)
+
+2024-12-03 18:00:25,382 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[229., 420.,   6.,  74.,   8.,   0.,  33.,   1., 166.,  63.],
+        [191., 241.,  34., 128.,  24.,   0.,  65.,   0., 125., 192.],
+        [272., 348.,  31.,  40.,  11.,   0.,  29.,  10., 148., 111.],
+        [173., 335.,  51.,  75.,  22.,   0.,  40.,   3.,  74., 227.],
+        [210., 288.,  11.,  43.,   4.,   0.,  28.,  18., 284., 114.],
+        [262., 227., 124.,  57.,  29.,   0.,  32.,   4.,  78., 187.],
+        [134., 322.,  21.,  28.,   1.,   0.,  48.,   6., 289., 151.],
+        [222., 251.,  50., 115.,  27.,   0.,  23.,  10., 157., 145.],
+        [316., 367.,   4., 102.,   9.,   0.,  24.,   1., 104.,  73.],
+        [270., 284.,  11.,  92.,  17.,   0.,  28.,   0., 133., 165.]])
+2024-12-03 18:00:25,386 INFO server.py 254:: [Server] Precision=[0.10048267 0.07817061 0.09037901 0.0994695  0.02631579        nan
+ 0.13714285 0.18867925 0.06675225 0.11554622],
+ Recall=[0.229 0.241 0.031 0.075 0.004 0.    0.048 0.01  0.104 0.165],
+ F1-score=[0.13967672 0.11805046 0.0461653  0.08551882 0.00694444        nan
+ 0.07111111 0.01899335 0.08131353 0.13591434],
+ my_accuracy=9.070000052452087[%]
+2024-12-03 18:00:25,387 INFO _main.py 209:: ########EPOCH 0 ########
+2024-12-03 18:00:25,387 INFO _main.py 210:: ###Model distribution###
+2024-12-03 18:01:30,547 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:01:30,547 INFO server.py 818:: additve id={0}
+2024-12-03 18:01:30,547 INFO server.py 819:: unreliable id =set()
+2024-12-03 18:01:31,225 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:01:31,226 INFO server.py 818:: additve id={0, 1}
+2024-12-03 18:01:31,226 INFO server.py 819:: unreliable id ={0}
+2024-12-03 18:01:31,977 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:01:31,977 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:31,978 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:32,999 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:32,999 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:32,999 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:34,132 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:34,132 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:34,132 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:35,602 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:35,602 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:35,603 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:37,000 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:37,000 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:37,000 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:38,800 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:38,800 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:38,801 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:40,653 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:40,654 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:40,654 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:42,772 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:42,772 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:42,772 INFO server.py 819:: unreliable id ={0, 2}
+2024-12-03 18:01:44,991 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:44,992 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:44,992 INFO server.py 819:: unreliable id ={0, 2, 10}
+2024-12-03 18:01:47,535 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:47,536 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:47,536 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:01:49,968 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:01:49,968 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:49,968 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:01:52,925 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:01:52,926 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:52,926 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:01:55,860 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:01:55,860 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:55,861 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:01:59,125 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:01:59,125 INFO server.py 818:: additve id=set()
+2024-12-03 18:01:59,125 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:02,377 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:02:02,378 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:02,378 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:05,973 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:02:05,974 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:05,974 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:09,574 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18}
+2024-12-03 18:02:09,575 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:09,575 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:13,478 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18}
+2024-12-03 18:02:13,479 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:13,479 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:17,453 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:17,453 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:17,454 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:21,769 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:21,770 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:21,770 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:26,017 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:26,017 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:26,017 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:30,689 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:30,690 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:30,690 INFO server.py 819:: unreliable id ={0, 11, 2, 10}
+2024-12-03 18:02:35,310 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:35,311 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:35,311 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24}
+2024-12-03 18:02:40,324 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:40,325 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:40,325 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25}
+2024-12-03 18:02:45,409 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:45,409 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:45,410 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:02:50,703 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:50,703 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:50,703 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:02:56,038 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:02:56,038 INFO server.py 818:: additve id=set()
+2024-12-03 18:02:56,038 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:01,822 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:01,822 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:01,822 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:07,870 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:07,871 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:07,871 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:14,366 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:14,367 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:14,367 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:20,849 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:20,849 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:20,849 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:27,682 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:27,682 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:27,682 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:34,489 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:34,489 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:34,489 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:41,668 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:41,668 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:41,668 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:48,834 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:48,835 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:48,835 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:03:56,428 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:03:56,428 INFO server.py 818:: additve id=set()
+2024-12-03 18:03:56,428 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:04:03,872 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:04:03,872 INFO server.py 818:: additve id=set()
+2024-12-03 18:04:03,872 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 24, 25, 26}
+2024-12-03 18:04:11,583 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 20}
+2024-12-03 18:04:11,584 INFO server.py 818:: additve id=set()
+2024-12-03 18:04:11,584 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:04:11,594 INFO server.py 1080:: clients' sizes=[15, 12, 5, 7, 6, 13, 13, 4, 4, 10, 13, 8, 5, 9, 12, 14, 6, 12, 11, 9, 6, 12, 17, 7, 9, 9, 8, 12, 9, 8, 6, 5, 9, 12, 9, 4, 7, 12, 14, 9], total=372
+2024-12-03 18:04:14,248 INFO server.py 327:: [Server] The aggregation takes 163.835618 seconds.
+
+2024-12-03 18:04:14,301 INFO server.py 211:: [Server] Start testing
+2024-12-03 18:04:18,049 INFO server.py 235:: [Server] Test set: Average loss: 2.1431, Accuracy: 2432/10000 (24.32%)
+
+2024-12-03 18:04:18,051 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[505.,   0.,  39.,  27., 186.,  77., 103.,   0.,  63.,   0.],
+        [ 74.,   1.,   7.,  71., 311., 326., 172.,   1.,  34.,   3.],
+        [116.,   0.,  80.,  40., 407., 228., 127.,   1.,   1.,   0.],
+        [ 13.,   0.,  17.,  47., 296., 461., 161.,   1.,   4.,   0.],
+        [ 60.,   0.,  20.,  26., 671.,  93., 123.,   1.,   6.,   0.],
+        [ 13.,   0.,  11.,  29., 215., 622., 109.,   0.,   1.,   0.],
+        [ 33.,   0.,  37.,  25., 433., 162., 309.,   0.,   1.,   0.],
+        [ 16.,   0.,   6.,  30., 558., 290.,  88.,   9.,   3.,   0.],
+        [417.,   0.,  13.,  34., 150.,  88., 115.,   0., 182.,   1.],
+        [ 60.,   0.,   9.,  38., 337., 378., 121.,   0.,  51.,   6.]])
+2024-12-03 18:04:18,052 INFO server.py 254:: [Server] Precision=[0.38638103 1.         0.33472803 0.12806539 0.18827161 0.22825688
+ 0.21638656 0.6923077  0.5260116  0.6       ],
+ Recall=[0.505 0.001 0.08  0.047 0.671 0.622 0.309 0.009 0.182 0.006],
+ F1-score=[0.43779802 0.001998   0.1291364  0.06876371 0.29404032 0.33395973
+ 0.25453046 0.017769   0.2704309  0.01188119],
+ my_accuracy=24.320000410079956[%]
+2024-12-03 18:04:18,052 INFO _main.py 209:: ########EPOCH 1 ########
+2024-12-03 18:04:18,052 INFO _main.py 210:: ###Model distribution###
+2024-12-03 18:05:23,115 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:05:23,116 INFO server.py 818:: additve id={0}
+2024-12-03 18:05:23,116 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:23,798 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:05:23,799 INFO server.py 818:: additve id={0, 1}
+2024-12-03 18:05:23,799 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:24,554 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:05:24,554 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:24,555 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:25,586 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:25,586 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:25,586 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:26,726 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:26,727 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:26,727 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:28,210 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:28,210 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:28,211 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:29,621 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:29,622 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:29,622 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:31,437 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:31,438 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:31,438 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:33,313 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:33,314 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:33,314 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:35,459 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:35,459 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:35,459 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:37,700 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:37,700 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:37,701 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:40,256 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:40,256 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:40,256 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:42,703 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:42,703 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:42,703 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:45,661 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:45,662 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:45,662 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:48,595 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:05:48,596 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:48,596 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:51,874 INFO server.py 817:: flip_sign_id={0, 2, 10}
+2024-12-03 18:05:51,874 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:51,875 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:55,117 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:05:55,118 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:55,118 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:05:58,720 INFO server.py 817:: flip_sign_id={0, 11, 2, 10}
+2024-12-03 18:05:58,721 INFO server.py 818:: additve id=set()
+2024-12-03 18:05:58,721 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:02,454 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18}
+2024-12-03 18:06:02,454 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:02,455 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:06,415 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18}
+2024-12-03 18:06:06,415 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:06,416 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:10,442 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:10,442 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:10,442 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:14,797 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:14,797 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:14,798 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:19,040 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:19,041 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:19,041 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:23,720 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:23,720 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:23,720 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:28,338 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:28,338 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:28,338 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:33,352 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:33,352 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:33,353 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:38,489 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:38,489 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:38,489 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:43,844 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:43,845 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:43,845 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:49,229 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:49,229 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:49,229 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:06:55,072 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:06:55,073 INFO server.py 818:: additve id=set()
+2024-12-03 18:06:55,073 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:01,095 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:01,095 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:01,095 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:07,596 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:07,596 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:07,596 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:14,057 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:14,057 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:14,057 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:20,883 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:20,883 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:20,884 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:27,706 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:27,706 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:27,706 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:34,987 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:34,987 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:34,987 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:42,244 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:42,244 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:42,244 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:49,947 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:49,947 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:49,947 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:07:57,383 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:07:57,384 INFO server.py 818:: additve id=set()
+2024-12-03 18:07:57,384 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:08:05,149 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:08:05,150 INFO server.py 818:: additve id=set()
+2024-12-03 18:08:05,150 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:08:05,159 INFO server.py 1080:: clients' sizes=[15, 12, 5, 7, 6, 13, 13, 4, 4, 10, 13, 8, 5, 9, 12, 14, 6, 12, 11, 9, 6, 12, 17, 7, 9, 9, 8, 12, 9, 8, 6, 5, 9, 12, 9, 4, 7, 12, 14, 9], total=372
+2024-12-03 18:08:07,952 INFO server.py 327:: [Server] The aggregation takes 164.968880 seconds.
+
+2024-12-03 18:08:08,006 INFO server.py 211:: [Server] Start testing
+2024-12-03 18:08:11,820 INFO server.py 235:: [Server] Test set: Average loss: 2.5680, Accuracy: 2180/10000 (21.8%)
+
+2024-12-03 18:08:11,821 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[539.,   0., 251.,   7.,  89.,   9.,   7.,   0.,  98.,   0.],
+        [151.,   0., 317.,  67., 256.,  81.,  58.,   1.,  69.,   0.],
+        [115.,   0., 596.,  20., 188.,  57.,  22.,   0.,   2.,   0.],
+        [ 38.,   0., 414.,  54., 292., 150.,  47.,   0.,   5.,   0.],
+        [ 99.,   0., 490.,  11., 351.,  22.,  17.,   0.,  10.,   0.],
+        [ 29.,   0., 311.,  44., 245., 335.,  36.,   0.,   0.,   0.],
+        [ 65.,   0., 643.,  18., 172.,  28.,  74.,   0.,   0.,   0.],
+        [ 26.,   0., 280.,  44., 525., 107.,   9.,   3.,   6.,   0.],
+        [473.,   0., 180.,   7.,  81.,  16.,  15.,   0., 228.,   0.],
+        [116.,   0., 286.,  55., 312., 119.,  42.,   0.,  70.,   0.]])
+2024-12-03 18:08:11,823 INFO server.py 254:: [Server] Precision=[0.3264688         nan 0.1581741  0.16513762 0.13978495 0.3625541
+ 0.22629969 0.75       0.46721312        nan],
+ Recall=[0.539 0.    0.596 0.054 0.351 0.335 0.074 0.003 0.228 0.   ],
+ F1-score=[0.40663898        nan 0.25       0.08138658 0.19994304 0.34823284
+ 0.11152975 0.0059761  0.30645162        nan],
+ my_accuracy=21.799999475479126[%]
+2024-12-03 18:08:11,823 INFO _main.py 209:: ########EPOCH 2 ########
+2024-12-03 18:08:11,823 INFO _main.py 210:: ###Model distribution###
+2024-12-03 18:09:17,444 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:09:17,444 INFO server.py 818:: additve id={0}
+2024-12-03 18:09:17,445 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:18,125 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:09:18,126 INFO server.py 818:: additve id={0, 1}
+2024-12-03 18:09:18,126 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:18,882 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:09:18,882 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:18,882 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:19,910 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:19,910 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:19,910 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:21,049 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:21,050 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:21,050 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:22,527 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:22,527 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:22,528 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:23,944 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:23,944 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:23,944 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:25,765 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:25,766 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:25,766 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:27,637 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:27,637 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:27,638 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:29,766 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:29,767 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:29,767 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:32,003 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:32,003 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:32,003 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:34,547 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:34,548 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:34,548 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:36,982 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:36,982 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:36,982 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:39,935 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:39,935 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:39,935 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:42,837 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:42,838 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:42,838 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:46,101 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:09:46,102 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:46,102 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:49,332 INFO server.py 817:: flip_sign_id={0, 2}
+2024-12-03 18:09:49,332 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:49,333 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:52,915 INFO server.py 817:: flip_sign_id={0, 2, 10}
+2024-12-03 18:09:52,915 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:52,915 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:09:56,601 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:09:56,602 INFO server.py 818:: additve id=set()
+2024-12-03 18:09:56,602 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:00,523 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:10:00,524 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:00,524 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:04,589 INFO server.py 817:: flip_sign_id={0, 2, 10, 18, 20}
+2024-12-03 18:10:04,589 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:04,590 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:08,935 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:08,935 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:08,935 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:13,143 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:13,144 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:13,144 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:17,756 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:17,757 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:17,757 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:22,343 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:22,343 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:22,343 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:27,404 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:27,404 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:27,405 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:32,511 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:32,512 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:32,512 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:37,873 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:37,874 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:37,874 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:43,214 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:43,215 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:43,215 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:49,048 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:49,049 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:49,049 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:10:55,036 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:10:55,037 INFO server.py 818:: additve id=set()
+2024-12-03 18:10:55,037 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:01,525 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:01,526 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:01,526 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:08,015 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:08,016 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:08,016 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:14,846 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:14,846 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:14,846 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:21,659 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:21,659 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:21,659 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:28,895 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:28,896 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:28,896 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:35,998 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:35,998 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:35,998 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:43,535 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:43,536 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:43,536 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:50,937 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:50,938 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:50,938 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:58,652 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:11:58,652 INFO server.py 818:: additve id=set()
+2024-12-03 18:11:58,652 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:11:58,663 INFO server.py 1080:: clients' sizes=[15, 12, 5, 7, 6, 13, 13, 4, 4, 10, 13, 8, 5, 9, 12, 14, 6, 12, 11, 9, 6, 12, 17, 7, 9, 9, 8, 12, 9, 8, 6, 5, 9, 12, 9, 4, 7, 12, 14, 9], total=372
+2024-12-03 18:12:01,401 INFO server.py 327:: [Server] The aggregation takes 164.087806 seconds.
+
+2024-12-03 18:12:01,456 INFO server.py 211:: [Server] Start testing
+2024-12-03 18:12:05,322 INFO server.py 235:: [Server] Test set: Average loss: 2.3933, Accuracy: 2703/10000 (27.03%)
+
+2024-12-03 18:12:05,324 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[421.,   0., 232.,  12.,  75.,  29.,   6.,   0., 225.,   0.],
+        [ 62.,   2., 234., 126., 156., 222.,  40.,   0., 158.,   0.],
+        [ 95.,   0., 529.,  23., 200., 126.,  17.,   0.,  10.,   0.],
+        [ 25.,   0., 290.,  92., 246., 313.,  28.,   0.,   6.,   0.],
+        [ 48.,   0., 347.,  14., 491.,  63.,  16.,   0.,  21.,   0.],
+        [ 21.,   0., 186.,  32., 163., 572.,  21.,   1.,   4.,   0.],
+        [ 36.,   0., 512.,  45., 256.,  80.,  69.,   0.,   2.,   0.],
+        [ 15.,   0., 179.,  60., 470., 255.,   2.,   8.,  11.,   0.],
+        [205.,   0., 127.,  28.,  74.,  33.,  19.,   1., 513.,   0.],
+        [ 36.,   0., 161.,  83., 203., 330.,  23.,   0., 158.,   6.]])
+2024-12-03 18:12:05,325 INFO server.py 254:: [Server] Precision=[0.43672198 1.         0.18913122 0.17864078 0.21036847 0.2827484
+ 0.28630707 0.8        0.4629964  1.        ],
+ Recall=[0.421 0.002 0.529 0.092 0.491 0.572 0.069 0.008 0.513 0.006],
+ F1-score=[0.4287169  0.00399202 0.27864105 0.12145215 0.2945411  0.37843204
+ 0.11120064 0.01584158 0.48671728 0.01192843],
+ my_accuracy=27.03000009059906[%]
+2024-12-03 18:12:05,325 INFO _main.py 209:: ########EPOCH 3 ########
+2024-12-03 18:12:05,326 INFO _main.py 210:: ###Model distribution###
+2024-12-03 18:13:10,624 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:13:10,625 INFO server.py 818:: additve id={0}
+2024-12-03 18:13:10,625 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:11,303 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:13:11,304 INFO server.py 818:: additve id={0, 1}
+2024-12-03 18:13:11,304 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:12,059 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:13:12,060 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:12,060 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:13,084 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:13,085 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:13,085 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:14,216 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:14,216 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:14,216 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:15,690 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:15,690 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:15,691 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:17,096 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:17,097 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:17,097 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:18,904 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:18,905 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:18,905 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:20,766 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:20,766 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:20,766 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:22,888 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:22,889 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:22,889 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:25,127 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:25,127 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:25,127 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:27,675 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:27,676 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:27,676 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:30,110 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:30,110 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:30,111 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:33,064 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:33,064 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:33,065 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:35,955 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:35,956 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:35,956 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:39,218 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:13:39,219 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:39,219 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:42,451 INFO server.py 817:: flip_sign_id={0, 2}
+2024-12-03 18:13:42,452 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:42,452 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:46,051 INFO server.py 817:: flip_sign_id={0, 2, 10}
+2024-12-03 18:13:46,052 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:46,052 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:49,760 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:13:49,760 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:49,760 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:53,676 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:13:53,676 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:53,677 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:13:57,704 INFO server.py 817:: flip_sign_id={0, 2, 10, 18, 20}
+2024-12-03 18:13:57,704 INFO server.py 818:: additve id=set()
+2024-12-03 18:13:57,705 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:02,024 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:02,025 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:02,025 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:06,223 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:06,223 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:06,224 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:10,876 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:10,877 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:10,877 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:15,479 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:15,479 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:15,479 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:20,507 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:20,507 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:20,507 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:25,602 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:25,603 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:25,603 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:30,948 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:30,949 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:30,949 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:36,296 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:36,297 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:36,297 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:42,039 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:42,040 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:42,040 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:48,008 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:48,008 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:48,008 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:14:54,479 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:14:54,479 INFO server.py 818:: additve id=set()
+2024-12-03 18:14:54,480 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:00,961 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:00,961 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:00,961 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:07,782 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:07,783 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:07,783 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:14,622 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:14,622 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:14,623 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:21,872 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:21,873 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:21,873 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:28,968 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:28,969 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:28,969 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:36,473 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:36,474 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:36,474 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:43,857 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:43,857 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:43,857 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:51,595 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:15:51,595 INFO server.py 818:: additve id=set()
+2024-12-03 18:15:51,595 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:15:51,605 INFO server.py 1080:: clients' sizes=[15, 12, 5, 7, 6, 13, 13, 4, 4, 10, 13, 8, 5, 9, 12, 14, 6, 12, 11, 9, 6, 12, 17, 7, 9, 9, 8, 12, 9, 8, 6, 5, 9, 12, 9, 4, 7, 12, 14, 9], total=372
+2024-12-03 18:15:54,407 INFO server.py 327:: [Server] The aggregation takes 163.913129 seconds.
+
+2024-12-03 18:15:54,465 INFO server.py 211:: [Server] Start testing
+2024-12-03 18:15:58,298 INFO server.py 235:: [Server] Test set: Average loss: 2.5261, Accuracy: 2602/10000 (26.02%)
+
+2024-12-03 18:15:58,300 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[377.,   0., 254.,  12., 162.,  10.,   5.,   0., 180.,   0.],
+        [ 66.,   0., 290., 154., 244., 106.,  36.,   0., 104.,   0.],
+        [ 75.,   0., 581.,  17., 242.,  72.,  13.,   0.,   0.,   0.],
+        [ 16.,   0., 367., 105., 305., 187.,  17.,   0.,   3.,   0.],
+        [ 18.,   0., 315.,  10., 612.,  30.,   5.,   0.,  10.,   0.],
+        [ 10.,   0., 251.,  59., 239., 420.,  19.,   1.,   1.,   0.],
+        [ 20.,   0., 541.,  34., 306.,  40.,  57.,   0.,   2.,   0.],
+        [ 11.,   0., 222.,  48., 569., 133.,   1.,  10.,   6.,   0.],
+        [177.,   0., 131.,  35., 184.,  17.,  18.,   0., 438.,   0.],
+        [ 22.,   0., 211., 120., 328., 180.,  16.,   0., 121.,   2.]])
+2024-12-03 18:15:58,301 INFO server.py 254:: [Server] Precision=[0.4760101         nan 0.18368638 0.17676768 0.1917894  0.35146442
+ 0.30481285 0.90909094 0.5063584  1.        ],
+ Recall=[0.377 0.    0.581 0.105 0.612 0.42  0.057 0.01  0.438 0.002],
+ F1-score=[0.42075893        nan 0.27912563 0.13174404 0.2920544  0.3826879
+ 0.09604044 0.01978239 0.4697051  0.00399202],
+ my_accuracy=26.019999384880066[%]
+2024-12-03 18:15:58,301 INFO _main.py 209:: ########EPOCH 4 ########
+2024-12-03 18:15:58,302 INFO _main.py 210:: ###Model distribution###
+2024-12-03 18:17:03,603 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:17:03,604 INFO server.py 818:: additve id={0}
+2024-12-03 18:17:03,604 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:04,281 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:17:04,281 INFO server.py 818:: additve id={0, 1}
+2024-12-03 18:17:04,281 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:05,035 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:17:05,036 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:05,036 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:06,069 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:06,069 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:06,069 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:07,202 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:07,203 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:07,203 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:08,679 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:08,680 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:08,680 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:10,091 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:10,092 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:10,092 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:11,897 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:11,897 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:11,897 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:13,765 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:13,765 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:13,766 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:15,931 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:15,932 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:15,932 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:18,148 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:18,148 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:18,148 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:20,689 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:20,689 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:20,689 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:23,126 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:23,126 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:23,126 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:26,102 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:26,103 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:26,103 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:28,990 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:28,991 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:28,991 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:32,259 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:17:32,260 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:32,260 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:35,505 INFO server.py 817:: flip_sign_id={0, 2}
+2024-12-03 18:17:35,505 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:35,505 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:39,119 INFO server.py 817:: flip_sign_id={0, 2, 10}
+2024-12-03 18:17:39,119 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:39,119 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:42,813 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:17:42,814 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:42,814 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:46,744 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:17:46,744 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:46,744 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:50,771 INFO server.py 817:: flip_sign_id={0, 2, 10, 18, 20}
+2024-12-03 18:17:50,771 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:50,771 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:55,079 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:17:55,079 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:55,079 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:17:59,288 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:17:59,289 INFO server.py 818:: additve id=set()
+2024-12-03 18:17:59,289 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:03,938 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:03,939 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:03,939 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:08,570 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:08,570 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:08,570 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:13,604 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:13,605 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:13,605 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:18,761 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:18,762 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:18,762 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:24,107 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:24,108 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:24,108 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:29,494 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:29,494 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:29,495 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:35,340 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:35,341 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:35,341 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:41,366 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:41,367 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:41,367 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:47,855 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:47,855 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:47,856 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:18:54,357 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:18:54,357 INFO server.py 818:: additve id=set()
+2024-12-03 18:18:54,357 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:01,192 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:01,192 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:01,192 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:08,034 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:08,034 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:08,035 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:15,297 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:15,297 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:15,298 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:22,440 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:22,441 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:22,441 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:29,982 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:29,982 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:29,982 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:37,391 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:37,391 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:37,391 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:45,148 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:19:45,148 INFO server.py 818:: additve id=set()
+2024-12-03 18:19:45,148 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:19:45,157 INFO server.py 1080:: clients' sizes=[15, 12, 5, 7, 6, 13, 13, 4, 4, 10, 13, 8, 5, 9, 12, 14, 6, 12, 11, 9, 6, 12, 17, 7, 9, 9, 8, 12, 9, 8, 6, 5, 9, 12, 9, 4, 7, 12, 14, 9], total=372
+2024-12-03 18:19:47,969 INFO server.py 327:: [Server] The aggregation takes 164.498039 seconds.
+
+2024-12-03 18:19:48,027 INFO server.py 211:: [Server] Start testing
+2024-12-03 18:19:51,886 INFO server.py 235:: [Server] Test set: Average loss: 2.4942, Accuracy: 2657/10000 (26.57%)
+
+2024-12-03 18:19:51,887 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[421.,   0., 251.,  19.,  63.,   8.,   2.,   0., 236.,   0.],
+        [ 70.,   0., 357., 210., 115.,  81.,  32.,   1., 134.,   0.],
+        [ 82.,   0., 670.,  34., 131.,  59.,  16.,   0.,   8.,   0.],
+        [ 26.,   0., 482., 174., 146., 144.,  22.,   0.,   6.,   0.],
+        [ 40.,   0., 473.,  27., 401.,  28.,  10.,   0.,  21.,   0.],
+        [ 13.,   0., 341., 122., 126., 379.,  17.,   1.,   1.,   0.],
+        [ 36.,   0., 687.,  58., 128.,  31.,  57.,   0.,   3.,   0.],
+        [ 15.,   0., 348., 100., 366., 142.,   2.,  14.,  13.,   0.],
+        [166.,   0., 147.,  59.,  60.,  12.,  16.,   0., 540.,   0.],
+        [ 35.,   0., 296., 192., 140., 156.,  22.,   2., 156.,   1.]])
+2024-12-03 18:19:51,889 INFO server.py 254:: [Server] Precision=[0.46570796        nan 0.16535044 0.17487437 0.23926014 0.36442307
+ 0.29081634 0.7777778  0.48300537 1.        ],
+ Recall=[0.421 0.    0.67  0.174 0.401 0.379 0.057 0.014 0.54  0.001],
+ F1-score=[0.4422269         nan 0.26524147 0.17443609 0.29970106 0.37156862
+ 0.09531772 0.02750491 0.50991505 0.001998  ],
+ my_accuracy=26.570001244544983[%]
+2024-12-03 18:19:51,889 INFO _main.py 209:: ########EPOCH 5 ########
+2024-12-03 18:19:51,890 INFO _main.py 210:: ###Model distribution###
+2024-12-03 18:20:57,713 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:20:57,714 INFO server.py 818:: additve id={0}
+2024-12-03 18:20:57,714 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:20:58,396 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:20:58,396 INFO server.py 818:: additve id={0, 1}
+2024-12-03 18:20:58,396 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:20:59,154 INFO server.py 817:: flip_sign_id=set()
+2024-12-03 18:20:59,155 INFO server.py 818:: additve id=set()
+2024-12-03 18:20:59,155 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:00,184 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:00,184 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:00,184 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:01,323 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:01,324 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:01,324 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:02,815 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:02,815 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:02,815 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:04,237 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:04,238 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:04,238 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:06,080 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:06,081 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:06,081 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:07,959 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:07,959 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:07,959 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:10,113 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:10,113 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:10,113 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:12,342 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:12,343 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:12,343 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:14,898 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:14,898 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:14,899 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:17,336 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:17,337 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:17,337 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:20,287 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:20,287 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:20,288 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:23,206 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:23,206 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:23,206 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:26,463 INFO server.py 817:: flip_sign_id={2}
+2024-12-03 18:21:26,463 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:26,463 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:29,706 INFO server.py 817:: flip_sign_id={0, 2}
+2024-12-03 18:21:29,707 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:29,707 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:33,274 INFO server.py 817:: flip_sign_id={0, 2, 10}
+2024-12-03 18:21:33,275 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:33,275 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:36,955 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:21:36,955 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:36,955 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:40,874 INFO server.py 817:: flip_sign_id={0, 18, 2, 10}
+2024-12-03 18:21:40,874 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:40,874 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:44,899 INFO server.py 817:: flip_sign_id={0, 2, 10, 18, 20}
+2024-12-03 18:21:44,899 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:44,899 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:49,204 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:21:49,204 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:49,204 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:53,403 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:21:53,404 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:53,404 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:21:58,022 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:21:58,023 INFO server.py 818:: additve id=set()
+2024-12-03 18:21:58,023 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:02,662 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:02,663 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:02,663 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:07,706 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:07,707 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:07,707 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:12,834 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:12,834 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:12,835 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:18,179 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:18,179 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:18,179 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:23,594 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:23,594 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:23,595 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:29,382 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:29,382 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:29,382 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:35,360 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:35,361 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:35,361 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:41,836 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:41,836 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:41,836 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:48,304 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:48,304 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:48,304 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:22:55,141 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:22:55,141 INFO server.py 818:: additve id=set()
+2024-12-03 18:22:55,141 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:23:01,945 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:23:01,945 INFO server.py 818:: additve id=set()
+2024-12-03 18:23:01,945 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:23:09,182 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:23:09,182 INFO server.py 818:: additve id=set()
+2024-12-03 18:23:09,182 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:23:16,285 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:23:16,285 INFO server.py 818:: additve id=set()
+2024-12-03 18:23:16,285 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:23:23,831 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:23:23,832 INFO server.py 818:: additve id=set()
+2024-12-03 18:23:23,832 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}
+2024-12-03 18:23:31,219 INFO server.py 817:: flip_sign_id={0, 2, 10, 11, 18, 20}
+2024-12-03 18:23:31,219 INFO server.py 818:: additve id=set()
+2024-12-03 18:23:31,220 INFO server.py 819:: unreliable id ={0, 2, 10, 11, 18, 24, 25, 26}

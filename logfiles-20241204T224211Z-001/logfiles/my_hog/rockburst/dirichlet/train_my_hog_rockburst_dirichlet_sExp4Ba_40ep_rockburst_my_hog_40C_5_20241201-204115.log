@@ -1,0 +1,243 @@
+2024-12-01 20:41:15,278 INFO _main.py 39:: ################################################################
+2024-12-01 20:41:15,280 INFO _main.py 41:: #                              batch_size: 64                  #
+2024-12-01 20:41:15,281 INFO _main.py 41:: #                         test_batch_size: 32                  #
+2024-12-01 20:41:15,282 INFO _main.py 41:: #                                  epochs: 10                  #
+2024-12-01 20:41:15,283 INFO _main.py 41:: #                               optimizer: SGD                 #
+2024-12-01 20:41:15,283 INFO _main.py 41:: #                                      lr: 0.01                #
+2024-12-01 20:41:15,283 INFO _main.py 41:: #                                momentum: 0.9                 #
+2024-12-01 20:41:15,284 INFO _main.py 41:: #                            weight_decay: 0.0001              #
+2024-12-01 20:41:15,284 INFO _main.py 41:: #                                    seed: 1                   #
+2024-12-01 20:41:15,284 INFO _main.py 41:: #                            log_interval: 11                  #
+2024-12-01 20:41:15,284 INFO _main.py 41:: #                             num_clients: 40                  #
+2024-12-01 20:41:15,284 INFO _main.py 41:: #                           output_folder: experiments         #
+2024-12-01 20:41:15,284 INFO _main.py 41:: #                                 dataset: rockburst           #
+2024-12-01 20:41:15,285 INFO _main.py 41:: #                             loader_type: dirichlet           #
+2024-12-01 20:41:15,285 INFO _main.py 41:: #                             loader_path: ./data/loader.pk    #
+2024-12-01 20:41:15,285 INFO _main.py 41:: #                                      AR: my_hog              #
+2024-12-01 20:41:15,285 INFO _main.py 41:: #                     n_attacker_backdoor: 0                   #
+2024-12-01 20:41:15,285 INFO _main.py 41:: #                        backdoor_trigger: [0, 0, 1, 1]        #
+2024-12-01 20:41:15,285 INFO _main.py 41:: #                   n_attacker_omniscient: 0                   #
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                        omniscient_scale: 1                   #
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                                 attacks: None                #
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                      save_model_weights: False               #
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                         experiment_name: sExp4Ba_40ep_rockburst_my_hog_40C_5#
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                          path_to_aggNet: None                #
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                                  device: cpu                 #
+2024-12-01 20:41:15,286 INFO _main.py 41:: #                            inner_epochs: 4                   #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                                 verbose: True                #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                         list_unreliable: [2, 18, 20]         #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                     unreliable_fraction: 0.5                 #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                    unreliable_fracTrain: 0.3                 #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                         mean_unreliable: 0.0                 #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                             blur_method: add_noise           #
+2024-12-01 20:41:15,287 INFO _main.py 41:: #                      max_std_unreliable: 30.0                #
+2024-12-01 20:41:15,288 INFO _main.py 41:: #                     list_uatk_add_noise: [24, 25, 26]        #
+2024-12-01 20:41:15,288 INFO _main.py 41:: #                          mean_add_noise: 0.0                 #
+2024-12-01 20:41:15,288 INFO _main.py 41:: #                           std_add_noise: 0.01                #
+2024-12-01 20:41:15,288 INFO _main.py 41:: #                     list_uatk_flip_sign: [0, 10, 11]         #
+2024-12-01 20:41:15,288 INFO _main.py 42:: ################################################################
+2024-12-01 20:41:15,288 INFO _main.py 43:: Namespace(batch_size=64, test_batch_size=32, epochs=10, optimizer='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001, seed=1, log_interval=11, num_clients=40, output_folder='experiments', dataset='rockburst', loader_type='dirichlet', loader_path='./data/loader.pk', AR='my_hog', n_attacker_backdoor=0, backdoor_trigger=[0, 0, 1, 1], n_attacker_omniscient=0, omniscient_scale=1, attacks=None, save_model_weights=False, experiment_name='sExp4Ba_40ep_rockburst_my_hog_40C_5', path_to_aggNet=None, device='cpu', inner_epochs=4, verbose=True, list_unreliable=[2, 18, 20], unreliable_fraction=0.5, unreliable_fracTrain=0.3, mean_unreliable=0.0, blur_method='add_noise', max_std_unreliable=30.0, list_uatk_add_noise=[24, 25, 26], mean_add_noise=0.0, std_add_noise=0.01, list_uatk_flip_sign=[0, 10, 11])
+2024-12-01 20:41:15,289 INFO _main.py 44:: #####################
+2024-12-01 20:41:15,289 INFO _main.py 45:: #####################
+2024-12-01 20:41:15,289 INFO _main.py 46:: #####################
+2024-12-01 20:41:15,289 INFO _main.py 47:: Aggregation Rule:	my_hog
+2024-12-01 20:41:15,289 INFO _main.py 48:: Data distribution:	dirichlet
+2024-12-01 20:41:15,289 INFO _main.py 49:: Attacks:	None 
+2024-12-01 20:41:15,290 INFO _main.py 50:: #####################
+2024-12-01 20:41:15,290 INFO _main.py 51:: #####################
+2024-12-01 20:41:15,290 INFO _main.py 52:: #####################
+2024-12-01 20:41:17,446 INFO server.py 366:: SET DBSCAN eps=1.3, min_samples=10
+2024-12-01 20:41:17,449 INFO _main.py 135:: [1-normal, 0-malicious] label =tensor([0., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 0., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1.])
+2024-12-01 20:41:17,455 INFO malicious_clients.py 117:: init ATTACK OMNISCIENT Client 0
+2024-12-01 20:41:17,460 INFO malicious_clients.py 18:: init UNRELIABLE Client 2
+2024-12-01 20:41:17,492 INFO malicious_clients.py 117:: init ATTACK OMNISCIENT Client 10
+2024-12-01 20:41:17,498 INFO malicious_clients.py 117:: init ATTACK OMNISCIENT Client 11
+2024-12-01 20:41:17,531 INFO malicious_clients.py 18:: init UNRELIABLE Client 18
+2024-12-01 20:41:17,538 INFO malicious_clients.py 18:: init UNRELIABLE Client 20
+2024-12-01 20:41:17,556 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 24
+2024-12-01 20:41:17,560 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 25
+2024-12-01 20:41:17,564 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 26
+2024-12-01 20:41:17,615 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:17,633 INFO server.py 235:: [Server] Test set: Average loss: 1.3864, Accuracy: 50/200 (25.0%)
+
+2024-12-01 20:41:17,634 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.]])
+2024-12-01 20:41:17,643 INFO server.py 254:: [Server] Precision=[0.25  nan  nan  nan],
+ Recall=[1. 0. 0. 0.],
+ F1-score=[0.4 nan nan nan],
+ my_accuracy=25.0[%]
+2024-12-01 20:41:17,649 INFO _main.py 209:: ########EPOCH 0 ########
+2024-12-01 20:41:17,649 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:20,114 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:20,126 INFO server.py 327:: [Server] The aggregation takes 2.045035 seconds.
+
+2024-12-01 20:41:20,127 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:20,143 INFO server.py 235:: [Server] Test set: Average loss: 1.3840, Accuracy: 50/200 (25.0%)
+
+2024-12-01 20:41:20,144 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.]])
+2024-12-01 20:41:20,146 INFO server.py 254:: [Server] Precision=[0.25  nan  nan  nan],
+ Recall=[1. 0. 0. 0.],
+ F1-score=[0.4 nan nan nan],
+ my_accuracy=25.0[%]
+2024-12-01 20:41:20,146 INFO _main.py 209:: ########EPOCH 1 ########
+2024-12-01 20:41:20,147 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:22,662 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:22,678 INFO server.py 327:: [Server] The aggregation takes 2.050100 seconds.
+
+2024-12-01 20:41:22,679 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:22,695 INFO server.py 235:: [Server] Test set: Average loss: 1.3793, Accuracy: 50/200 (25.0%)
+
+2024-12-01 20:41:22,697 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.]])
+2024-12-01 20:41:22,698 INFO server.py 254:: [Server] Precision=[0.25  nan  nan  nan],
+ Recall=[1. 0. 0. 0.],
+ F1-score=[0.4 nan nan nan],
+ my_accuracy=25.0[%]
+2024-12-01 20:41:22,699 INFO _main.py 209:: ########EPOCH 2 ########
+2024-12-01 20:41:22,699 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:25,215 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:25,233 INFO server.py 327:: [Server] The aggregation takes 2.054236 seconds.
+
+2024-12-01 20:41:25,234 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:25,249 INFO server.py 235:: [Server] Test set: Average loss: 1.3737, Accuracy: 50/200 (25.0%)
+
+2024-12-01 20:41:25,250 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.]])
+2024-12-01 20:41:25,252 INFO server.py 254:: [Server] Precision=[0.25  nan  nan  nan],
+ Recall=[1. 0. 0. 0.],
+ F1-score=[0.4 nan nan nan],
+ my_accuracy=25.0[%]
+2024-12-01 20:41:25,252 INFO _main.py 209:: ########EPOCH 3 ########
+2024-12-01 20:41:25,253 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:27,668 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:27,687 INFO server.py 327:: [Server] The aggregation takes 2.004645 seconds.
+
+2024-12-01 20:41:27,688 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:27,708 INFO server.py 235:: [Server] Test set: Average loss: 1.3671, Accuracy: 53/200 (26.5%)
+
+2024-12-01 20:41:27,709 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [47.,  0.,  0.,  3.]])
+2024-12-01 20:41:27,710 INFO server.py 254:: [Server] Precision=[0.2538071       nan       nan 1.       ],
+ Recall=[1.   0.   0.   0.06],
+ F1-score=[0.4048583         nan        nan 0.11320755],
+ my_accuracy=26.499998569488525[%]
+2024-12-01 20:41:27,711 INFO _main.py 209:: ########EPOCH 4 ########
+2024-12-01 20:41:27,712 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:30,345 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:30,366 INFO server.py 327:: [Server] The aggregation takes 2.048078 seconds.
+
+2024-12-01 20:41:30,367 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:30,389 INFO server.py 235:: [Server] Test set: Average loss: 1.3601, Accuracy: 63/200 (31.5%)
+
+2024-12-01 20:41:30,390 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [37.,  0.,  0., 13.]])
+2024-12-01 20:41:30,392 INFO server.py 254:: [Server] Precision=[0.26737967        nan        nan 1.        ],
+ Recall=[1.   0.   0.   0.26],
+ F1-score=[0.42194092        nan        nan 0.4126984 ],
+ my_accuracy=31.49999976158142[%]
+2024-12-01 20:41:30,392 INFO _main.py 209:: ########EPOCH 5 ########
+2024-12-01 20:41:30,393 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:33,089 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:33,099 INFO server.py 327:: [Server] The aggregation takes 1.998314 seconds.
+
+2024-12-01 20:41:33,101 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:33,117 INFO server.py 235:: [Server] Test set: Average loss: 1.3521, Accuracy: 66/200 (33.0%)
+
+2024-12-01 20:41:33,118 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [34.,  0.,  0., 16.]])
+2024-12-01 20:41:33,120 INFO server.py 254:: [Server] Precision=[0.27173913        nan        nan 1.        ],
+ Recall=[1.   0.   0.   0.32],
+ F1-score=[0.42735043        nan        nan 0.4848485 ],
+ my_accuracy=33.000001311302185[%]
+2024-12-01 20:41:33,121 INFO _main.py 209:: ########EPOCH 6 ########
+2024-12-01 20:41:33,121 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:35,528 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:35,544 INFO server.py 327:: [Server] The aggregation takes 1.996066 seconds.
+
+2024-12-01 20:41:35,546 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:35,559 INFO server.py 235:: [Server] Test set: Average loss: 1.3427, Accuracy: 70/200 (35.0%)
+
+2024-12-01 20:41:35,561 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [30.,  0.,  0., 20.]])
+2024-12-01 20:41:35,562 INFO server.py 254:: [Server] Precision=[0.2777778       nan       nan 1.       ],
+ Recall=[1.  0.  0.  0.4],
+ F1-score=[0.43478262        nan        nan 0.5714286 ],
+ my_accuracy=34.99999940395355[%]
+2024-12-01 20:41:35,562 INFO _main.py 209:: ########EPOCH 7 ########
+2024-12-01 20:41:35,563 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:37,977 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:37,988 INFO server.py 327:: [Server] The aggregation takes 1.977171 seconds.
+
+2024-12-01 20:41:37,989 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:38,003 INFO server.py 235:: [Server] Test set: Average loss: 1.3320, Accuracy: 75/200 (37.5%)
+
+2024-12-01 20:41:38,004 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [48.,  0.,  0.,  2.],
+        [25.,  0.,  0., 25.]])
+2024-12-01 20:41:38,005 INFO server.py 254:: [Server] Precision=[0.28901735        nan        nan 0.9259259 ],
+ Recall=[1.  0.  0.  0.5],
+ F1-score=[0.4484305         nan        nan 0.64935064],
+ my_accuracy=37.5[%]
+2024-12-01 20:41:38,006 INFO _main.py 209:: ########EPOCH 8 ########
+2024-12-01 20:41:38,007 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:40,528 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:40,545 INFO server.py 327:: [Server] The aggregation takes 2.081603 seconds.
+
+2024-12-01 20:41:40,546 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:40,560 INFO server.py 235:: [Server] Test set: Average loss: 1.3205, Accuracy: 80/200 (40.0%)
+
+2024-12-01 20:41:40,561 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [50.,  0.,  0.,  0.],
+        [48.,  0.,  0.,  2.],
+        [20.,  0.,  0., 30.]])
+2024-12-01 20:41:40,563 INFO server.py 254:: [Server] Precision=[0.29761904        nan        nan 0.9375    ],
+ Recall=[1.  0.  0.  0.6],
+ F1-score=[0.45871556        nan        nan 0.73170733],
+ my_accuracy=40.00000059604645[%]
+2024-12-01 20:41:40,563 INFO _main.py 209:: ########EPOCH 9 ########
+2024-12-01 20:41:40,564 INFO _main.py 210:: ###Model distribution###
+2024-12-01 20:41:42,994 INFO server.py 1064:: clients' sizes=[1, 2, 1, 0, 0, 0, 2, 2, 0, 1, 0, 1, 2, 2, 2, 2, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 0, 2, 0, 1, 2, 1, 0, 2, 0], total=41
+2024-12-01 20:41:43,014 INFO server.py 327:: [Server] The aggregation takes 2.016337 seconds.
+
+2024-12-01 20:41:43,017 INFO server.py 211:: [Server] Start testing
+2024-12-01 20:41:43,037 INFO server.py 235:: [Server] Test set: Average loss: 1.3071, Accuracy: 80/200 (40.0%)
+
+2024-12-01 20:41:43,041 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[50.,  0.,  0.,  0.],
+        [47.,  0.,  0.,  3.],
+        [45.,  0.,  0.,  5.],
+        [20.,  0.,  0., 30.]])
+2024-12-01 20:41:43,044 INFO server.py 254:: [Server] Precision=[0.30864197        nan        nan 0.7894737 ],
+ Recall=[1.  0.  0.  0.6],
+ F1-score=[0.47169814        nan        nan 0.68181825],
+ my_accuracy=40.00000059604645[%]

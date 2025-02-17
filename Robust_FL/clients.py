@@ -9,7 +9,6 @@ import logging
 
 from tools import tools
 
-
 class Client():
     def __init__(self, cid, model, dataLoader, optimizer, criterion=F.nll_loss, device='cpu', inner_epochs=1):
         self.cid = cid
@@ -25,7 +24,11 @@ class Client():
         self.criterion = criterion
         # for moving average of gradient updates
         self.K_avg = 3 # window size of moving average of grad updates
+        #self.k2_avg=2
         self.hog_avg = deque(maxlen=self.K_avg)
+        #self.my_avg = deque(maxlen=self.k2_avg)
+       
+        #self.local_median = {k: torch.zeros_like(v) for k, v in self.originalState.items()}
         #logging.info(f"Init client {cid} with size window avg grad={self.K_avg}")
 
     def init_stateChange(self):
@@ -34,7 +37,10 @@ class Client():
             values *= 0
         self.stateChange = states
         self.avg_delta = deepcopy(states)
+        self.avg2_delta=deepcopy(states)
         self.sum_hog = deepcopy(states)
+        self.local_avg = deepcopy(states)
+        
 
     def setModelParameter(self, states):
         self.model.load_state_dict(deepcopy(states))
@@ -45,6 +51,9 @@ class Client():
         return data, target
 
     def get_data_size(self):
+        #print("Data size",len(self.dataLoader))
+        #for x,y in self.dataLoader:
+          #print(x)
         return len(self.dataLoader)
 
     def train(self):
@@ -87,31 +96,58 @@ class Client():
             self.cid, test_loss, correct, len(testDataLoader.dataset),
             100. * correct / len(testDataLoader.dataset)))
 
+    #Mud-HoG update
+    # def update(self):
+    #     assert self.isTrained, 'nothing to update, call train() to obtain gradients'
+    #     newState = self.model.state_dict()
+    #     for p in self.originalState:
+    #         self.stateChange[p] = newState[p] - self.originalState[p]
+    #         self.sum_hog[p] += self.stateChange[p]
+    #         K_ = len(self.hog_avg)
+    #         if K_ == 0:
+    #             self.avg_delta[p] = self.stateChange[p]
+    #         elif K_ < self.K_avg:
+    #             self.avg_delta[p] = (self.avg_delta[p]*K_ + self.stateChange[p])/(K_+1)
+    #         else:
+    #             self.avg_delta[p] += (self.stateChange[p] - self.hog_avg[0][p])/self.K_avg
+    #     self.hog_avg.append(self.stateChange)
+    #     self.isTrained = False
+    
+    #my update
     def update(self):
-        assert self.isTrained, 'nothing to update, call train() to obtain gradients'
-        newState = self.model.state_dict()
-        for p in self.originalState:
-            self.stateChange[p] = newState[p] - self.originalState[p]
-            self.sum_hog[p] += self.stateChange[p]
-            K_ = len(self.hog_avg)
-            if K_ == 0:
-                self.avg_delta[p] = self.stateChange[p]
-            elif K_ < self.K_avg:
-                self.avg_delta[p] = (self.avg_delta[p]*K_ + self.stateChange[p])/(K_+1)
-            else:
-                self.avg_delta[p] += (self.stateChange[p] - self.hog_avg[0][p])/self.K_avg
-        self.hog_avg.append(self.stateChange)
-        self.isTrained = False
+      assert self.isTrained, 'nothing to update, call train() to obtain gradients'
+      newState = self.model.state_dict()
 
-    #         self.test(self.dataLoader)
+      for p in self.originalState:
+        # Compute current gradient
+          self.stateChange[p] = newState[p] - self.originalState[p]
+          
+
+        # Update local median as the average of current gradient and previous local median
+          self.local_avg[p] = (self.stateChange[p] + self.local_avg[p]) / 2
+
+      self.isTrained = False
+
+    
     def getDelta(self):
         return self.stateChange
     def getRealValue(self):
       return torch.cat([v.flatten() for v in self.originalState.values()])
+    #my local median function
+    def get_local_median(self):
+      return torch.cat([v.flatten() for v in self.local_avg.values()])
     
 
+
+
     def get_avg_grad(self):
+        #print("<<<<<<< avg2 delta",self.avg_delta.values())
         return torch.cat([v.flatten() for v in self.avg_delta.values()])
+    def get_local_grad(self):
+      #print(">>>>>>>>>>>>>>insode local grad function>>>>>>>>>>")
+      #print("<<<<<<< avg2 delta",self.avg_delta.values())
+      return torch.cat([v.flatten() for v in self.avg2_delta.values()])
+
 
     def get_sum_hog(self):
         #return utils.net2vec(self.sum_hog)

@@ -1,0 +1,83 @@
+2024-12-03 00:56:24,809 INFO _main.py 39:: ################################################################
+2024-12-03 00:56:24,810 INFO _main.py 41:: #                              batch_size: 64                  #
+2024-12-03 00:56:24,812 INFO _main.py 41:: #                         test_batch_size: 64                  #
+2024-12-03 00:56:24,813 INFO _main.py 41:: #                                  epochs: 40                  #
+2024-12-03 00:56:24,813 INFO _main.py 41:: #                               optimizer: SGD                 #
+2024-12-03 00:56:24,813 INFO _main.py 41:: #                                      lr: 0.01                #
+2024-12-03 00:56:24,814 INFO _main.py 41:: #                                momentum: 0.9                 #
+2024-12-03 00:56:24,814 INFO _main.py 41:: #                            weight_decay: 0.0001              #
+2024-12-03 00:56:24,814 INFO _main.py 41:: #                                    seed: 1                   #
+2024-12-03 00:56:24,814 INFO _main.py 41:: #                            log_interval: 11                  #
+2024-12-03 00:56:24,814 INFO _main.py 41:: #                             num_clients: 40                  #
+2024-12-03 00:56:24,814 INFO _main.py 41:: #                           output_folder: experiments         #
+2024-12-03 00:56:24,815 INFO _main.py 41:: #                                 dataset: cifar               #
+2024-12-03 00:56:24,815 INFO _main.py 41:: #                             loader_type: dirichlet           #
+2024-12-03 00:56:24,815 INFO _main.py 41:: #                             loader_path: ./data/loader.pk    #
+2024-12-03 00:56:24,815 INFO _main.py 41:: #                                      AR: my_hog              #
+2024-12-03 00:56:24,815 INFO _main.py 41:: #                     n_attacker_backdoor: 0                   #
+2024-12-03 00:56:24,815 INFO _main.py 41:: #                        backdoor_trigger: [0, 0, 1, 1]        #
+2024-12-03 00:56:24,816 INFO _main.py 41:: #                   n_attacker_omniscient: 0                   #
+2024-12-03 00:56:24,816 INFO _main.py 41:: #                        omniscient_scale: 1                   #
+2024-12-03 00:56:24,816 INFO _main.py 41:: #                                 attacks: None                #
+2024-12-03 00:56:24,816 INFO _main.py 41:: #                      save_model_weights: False               #
+2024-12-03 00:56:24,816 INFO _main.py 41:: #                         experiment_name: sExp4Ba_40ep_cifar_my_hog_40C_5#
+2024-12-03 00:56:24,816 INFO _main.py 41:: #                          path_to_aggNet: None                #
+2024-12-03 00:56:24,817 INFO _main.py 41:: #                                  device: cpu                 #
+2024-12-03 00:56:24,817 INFO _main.py 41:: #                            inner_epochs: 4                   #
+2024-12-03 00:56:24,817 INFO _main.py 41:: #                                 verbose: True                #
+2024-12-03 00:56:24,817 INFO _main.py 41:: #                         list_unreliable: [2, 18, 20]         #
+2024-12-03 00:56:24,817 INFO _main.py 41:: #                     unreliable_fraction: 0.5                 #
+2024-12-03 00:56:24,818 INFO _main.py 41:: #                    unreliable_fracTrain: 0.3                 #
+2024-12-03 00:56:24,818 INFO _main.py 41:: #                         mean_unreliable: 0.0                 #
+2024-12-03 00:56:24,818 INFO _main.py 41:: #                             blur_method: add_noise           #
+2024-12-03 00:56:24,818 INFO _main.py 41:: #                      max_std_unreliable: 30.0                #
+2024-12-03 00:56:24,818 INFO _main.py 41:: #                     list_uatk_add_noise: [24, 25, 26]        #
+2024-12-03 00:56:24,818 INFO _main.py 41:: #                          mean_add_noise: 0.0                 #
+2024-12-03 00:56:24,819 INFO _main.py 41:: #                           std_add_noise: 0.01                #
+2024-12-03 00:56:24,819 INFO _main.py 41:: #                     list_uatk_flip_sign: [0, 10, 11]         #
+2024-12-03 00:56:24,819 INFO _main.py 42:: ################################################################
+2024-12-03 00:56:24,819 INFO _main.py 43:: Namespace(batch_size=64, test_batch_size=64, epochs=40, optimizer='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001, seed=1, log_interval=11, num_clients=40, output_folder='experiments', dataset='cifar', loader_type='dirichlet', loader_path='./data/loader.pk', AR='my_hog', n_attacker_backdoor=0, backdoor_trigger=[0, 0, 1, 1], n_attacker_omniscient=0, omniscient_scale=1, attacks=None, save_model_weights=False, experiment_name='sExp4Ba_40ep_cifar_my_hog_40C_5', path_to_aggNet=None, device='cpu', inner_epochs=4, verbose=True, list_unreliable=[2, 18, 20], unreliable_fraction=0.5, unreliable_fracTrain=0.3, mean_unreliable=0.0, blur_method='add_noise', max_std_unreliable=30.0, list_uatk_add_noise=[24, 25, 26], mean_add_noise=0.0, std_add_noise=0.01, list_uatk_flip_sign=[0, 10, 11])
+2024-12-03 00:56:24,819 INFO _main.py 44:: #####################
+2024-12-03 00:56:24,820 INFO _main.py 45:: #####################
+2024-12-03 00:56:24,820 INFO _main.py 46:: #####################
+2024-12-03 00:56:24,820 INFO _main.py 47:: Aggregation Rule:	my_hog
+2024-12-03 00:56:24,820 INFO _main.py 48:: Data distribution:	dirichlet
+2024-12-03 00:56:24,820 INFO _main.py 49:: Attacks:	None 
+2024-12-03 00:56:24,821 INFO _main.py 50:: #####################
+2024-12-03 00:56:24,821 INFO _main.py 51:: #####################
+2024-12-03 00:56:24,821 INFO _main.py 52:: #####################
+2024-12-03 00:56:41,423 INFO server.py 366:: SET DBSCAN eps=18, min_samples=12
+2024-12-03 00:56:41,427 INFO _main.py 135:: [1-normal, 0-malicious] label =tensor([0., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 0., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1.])
+2024-12-03 00:56:42,055 INFO malicious_clients.py 123:: init ATTACK OMNISCIENT Client 0
+2024-12-03 00:56:43,509 INFO malicious_clients.py 18:: init UNRELIABLE Client 2
+2024-12-03 00:56:51,388 INFO malicious_clients.py 123:: init ATTACK OMNISCIENT Client 10
+2024-12-03 00:56:51,864 INFO malicious_clients.py 123:: init ATTACK OMNISCIENT Client 11
+2024-12-03 00:56:55,029 INFO malicious_clients.py 18:: init UNRELIABLE Client 18
+2024-12-03 00:56:55,965 INFO malicious_clients.py 18:: init UNRELIABLE Client 20
+2024-12-03 00:56:58,058 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 24
+2024-12-03 00:56:58,721 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 25
+2024-12-03 00:56:59,951 INFO malicious_clients.py 73:: init ATTACK ADD NOISE TO GRAD Client 26
+2024-12-03 00:57:13,034 INFO server.py 211:: [Server] Start testing
+2024-12-03 00:57:46,594 INFO server.py 235:: [Server] Test set: Average loss: 2.3744, Accuracy: 908/10000 (9.08%)
+
+2024-12-03 00:57:46,597 INFO server.py 238:: [Sever] Confusion matrix:
+ tensor([[229., 420.,   6.,  74.,   8.,   0.,  33.,   1., 166.,  63.],
+        [191., 240.,  33., 128.,  24.,   0.,  66.,   0., 125., 193.],
+        [271., 348.,  31.,  41.,  11.,   0.,  29.,  10., 148., 111.],
+        [173., 335.,  51.,  75.,  22.,   0.,  39.,   3.,  74., 228.],
+        [210., 288.,  11.,  43.,   4.,   0.,  28.,  18., 284., 114.],
+        [262., 227., 124.,  57.,  29.,   0.,  32.,   4.,  78., 187.],
+        [134., 322.,  21.,  28.,   1.,   0.,  48.,   6., 289., 151.],
+        [222., 251.,  50., 116.,  27.,   0.,  23.,  10., 157., 144.],
+        [315., 366.,   4., 102.,   9.,   0.,  24.,   1., 106.,  73.],
+        [269., 286.,  11.,  92.,  17.,   0.,  28.,   0., 132., 165.]])
+2024-12-03 00:57:46,611 INFO server.py 254:: [Server] Precision=[0.10061511 0.07784625 0.09064327 0.09920635 0.02631579        nan
+ 0.13714285 0.18867925 0.0679923  0.11546536],
+ Recall=[0.229 0.24  0.031 0.075 0.004 0.    0.048 0.01  0.106 0.165],
+ F1-score=[0.13980463 0.11756062 0.0461997  0.08542142 0.00694444        nan
+ 0.07111111 0.01899335 0.08284485 0.13585837],
+ my_accuracy=9.080000221729279[%]
+2024-12-03 00:57:46,615 INFO _main.py 209:: ########EPOCH 0 ########
+2024-12-03 00:57:46,615 INFO _main.py 210:: ###Model distribution###
